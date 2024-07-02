@@ -52,14 +52,17 @@
 
 		local user_info = luci.sys.exec("cat /proc/net/arp | grep '0x2' | wc -l") or 0
 		
-		local cpu_usage = (luci.sys.exec("expr 100 - $(top -n 1 | grep -E '^CPU:' | awk -F '%' '{print$4}' | awk -F ' ' '{print$2}' | awk '{print int($1 + 0.5)}')") or "6") .. "%"
+		local run_time = luci.sys.exec("awk '{print int($1/86400)\"天 \"int($1%86400/3600)\"时 \"int($1%86400%3600/60)\"分 \"int($1%60)\"秒\"}' /proc/uptime")
+	  
+	        local cpu_usage = (luci.sys.exec("expr 100 - $(top -n 1 | grep -E '^CPU:' | awk -F '%' '{print$4}' | awk -F ' ' '{print$2}' | awk '{print int($1 + 0.5)}')") or "6") .. "%"
 
 		local rv = {
 			cpuusage    = cpu_usage,
 			cpuinfo    = cpu_info,
 			ethinfo    = eth_info,
 			userinfo    = user_info,
-			uptime     = sysinfo.uptime or 0,
+			runtime = run_time,
+	                uptime     = sysinfo.uptime or 0,
 			localtime  = os.date(),
 			loadavg    = sysinfo.load or { 0, 0, 0 },
 			memory     = meminfo,
@@ -682,7 +685,10 @@
 			if (e = document.getElementById('uptime'))
 				e.innerHTML = String.format('%t', info.uptime);
 
-			if (e = document.getElementById('userinfo'))
+			if (e = document.getElementById('runtime'))
+				e.innerHTML = info.runtime;
+	
+	                if (e = document.getElementById('userinfo'))
 				e.innerHTML = info.userinfo;
 
 			if (e = document.getElementById('cpuinfo'))
@@ -745,7 +751,7 @@
 		</td></tr>
 		<tr><td width="33%"><%:Kernel Version%></td><td><%=unameinfo.release or "?"%></td></tr>
 		<tr><td width="33%"><%:Local Time%></td><td id="localtime">-</td></tr>
-		<tr><td width="33%"><%:Uptime%></td><td id="uptime">-</td></tr>
+		<tr><td width="33%"><%:Uptime%></td><td id="runtime">-</td></tr>
 		<tr><td width="33%"><%:Load Average%></td><td id="loadavg">-</td></tr>
 		<tr><td width="33%"><%:CPU usage (%)%></td><td id="cpuusage">-</td></tr>
 	</table>
