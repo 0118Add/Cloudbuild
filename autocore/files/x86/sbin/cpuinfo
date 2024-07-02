@@ -1,0 +1,18 @@
+#!/bin/sh
+
+MHz=`grep 'MHz' /proc/cpuinfo | cut -c12-15 |sed -n '1p'`
+
+if [ "$(grep 'AMD' /proc/cpuinfo)" != "" ]; then
+    TEMP=`sensors 2>/dev/null | grep 'Tctl' | cut -c16-`
+else
+    if [ -e "/dev/nvme0n1" ]; then
+        SSD=`smartctl -A /dev/nvme0n1 | grep 'Temperature:' | cut -c37-38`
+    elif [ -e "/dev/sda" ]; then
+        SSD=`smartctl -A /dev/sda | grep 'Temperature_Celsius' | cut -c88-89`
+    else
+        SSD="N/A"
+    fi
+    TEMP=`sensors 2>/dev/null | grep 'Core 0' | cut -c16-18`
+fi
+
+echo "$MHz MHz $TEMP.0°C "
