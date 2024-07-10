@@ -102,8 +102,8 @@ git clone https://$github/sbwml/package_kernel_tcp-brutal package/kernel/tcp-bru
 git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/luci.git immortalwrt-luci
 #cp -rf immortalwrt-luci/applications/luci-app-alist feeds/luci/applications/luci-app-alist
 #ln -sf ../../../feeds/luci/applications/luci-app-alist ./package/feeds/luci/luci-app-alist
-cp -rf immortalwrt-luci/applications/luci-app-daed feeds/luci/applications/luci-app-dae
-ln -sf ../../../feeds/luci/applications/luci-app-daed ./package/feeds/luci/luci-app-dae
+cp -rf immortalwrt-luci/applications/luci-app-dae feeds/luci/applications/luci-app-dae
+ln -sf ../../../feeds/luci/applications/luci-app-dae ./package/feeds/luci/luci-app-dae
 cp -rf immortalwrt-luci/applications/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
 ln -sf ../../../feeds/luci/applications/luci-app-ddns-go ./package/feeds/luci/luci-app-ddns-go
 # 克隆immortalwrt-packages仓库
