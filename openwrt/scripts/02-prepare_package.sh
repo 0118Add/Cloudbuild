@@ -47,6 +47,7 @@ git clone -b luci-smartdns-dev --single-branch https://github.com/lwb1978/openwr
 
 # SmartDNS
 rm -rf feeds/luci/applications/luci-app-smartdns
+rm -rf feeds/packages/net/smartdns
 
 # DAED
 #git clone -b master --depth 1 https://github.com/QiuSimons/luci-app-daed package/new/daed
