@@ -51,7 +51,7 @@ rm -rf feeds/packages/net/smartdns
 
 # DAED
 #git clone -b master --depth 1 https://github.com/QiuSimons/luci-app-daed package/new/daed
-#git clone https://$github/QiuSimons/luci-app-daed-next package/new/daed-next
+#git clone https://github.com/QiuSimons/luci-app-daed-next package/new/daed-next
 
 # immortalwrt homeproxy
 #git clone https://github.com/muink/luci-app-homeproxy package/new/homeproxy
