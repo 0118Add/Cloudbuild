@@ -12,11 +12,9 @@ curl -s https://$mirror/openwrt/patch/packages-patches/gpio-button-hotplug/fix-l
 # gpio-nct5104d
 curl -s https://$mirror/openwrt/patch/packages-patches/gpio-nct5104d/fix-build-for-linux-6.6.patch | patch -p1
 
-# mac80211-6.9.9 - fix ath10k-ct & rtl8812au-ac rtl8812au-ct
-rm -rf package/kernel/{ath10k-ct,rtl8812au-ac,rtl8812au-ct}
-git clone https://$gitea/sbwml/package_kernel_ath10k-ct package/kernel/ath10k-ct
-git clone https://$gitea/sbwml/package_kernel_rtl8812au-ac package/kernel/rtl8812au-ac
-git clone https://$gitea/sbwml/package_kernel_rtl8812au-ct package/kernel/rtl8812au-ct
+# rtl8812au-ct
+sed -i 's/stringop-overread/stringop-overread \\/' package/kernel/rtl8812au-ct/Makefile
+sed -i '/stringop-overread/a \     -Wno-error=enum-conversion' package/kernel/rtl8812au-ct/Makefile
 
 # dmx_usb_module
 mkdir -p feeds/packages/libs/dmx_usb_module/patches
@@ -62,7 +60,7 @@ popd
 # xtables-addons
 rm -rf feeds/packages/net/xtables-addons
 cp -a ../master/packages/net/xtables-addons feeds/packages/net/xtables-addons
- 
+
 # telephony
 pushd feeds/telephony
   # dahdi-linux
@@ -96,4 +94,8 @@ if [ "$KERNEL_CLANG_LTO" = "y" ]; then
     # coova-chilli module
     rm -rf feeds/packages/net/coova-chilli
     git clone https://$github/sbwml/kmod_packages_net_coova-chilli feeds/packages/net/coova-chilli
+    # rtl8812au-ac & rtl8812au-ct
+    rm -rf package/kernel/rtl8812au-ac package/kernel/rtl8812au-ct
+    git clone https://$gitea/sbwml/package_kernel_rtl8812au-ac package/kernel/rtl8812au-ac
+    git clone https://$gitea/sbwml/package_kernel_rtl8812au-ct package/kernel/rtl8812au-ct
 fi
