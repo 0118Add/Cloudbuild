@@ -12,8 +12,8 @@ curl -s https://$mirror/openwrt/patch/packages-patches/gpio-button-hotplug/fix-l
 # gpio-nct5104d
 curl -s https://$mirror/openwrt/patch/packages-patches/gpio-nct5104d/fix-build-for-linux-6.6.patch | patch -p1
 
-# mac80211-6.9.9 - fix ath10k-ct & rtl8812au-ct rtl8812au-ac
-rm -rf package/kernel/{ath10k-ct,rtl8812au-ct}
+# mac80211-6.9.9 - fix ath10k-ct & rtl8812au-ac rtl8812au-ct
+rm -rf package/kernel/{ath10k-ct,rtl8812au-ac,rtl8812au-ct}
 git clone https://$gitea/sbwml/package_kernel_ath10k-ct package/kernel/ath10k-ct
 git clone https://$gitea/sbwml/package_kernel_rtl8812au-ac package/kernel/rtl8812au-ac
 git clone https://$gitea/sbwml/package_kernel_rtl8812au-ct package/kernel/rtl8812au-ct
