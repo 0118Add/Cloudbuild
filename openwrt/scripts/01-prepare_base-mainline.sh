@@ -153,7 +153,7 @@ git clone https://$github/sbwml/package_kernel_rtl8812au-ac package/kernel/rtl88
 
 # mt76 - main
 rm -rf package/kernel/mt76
-cp -a ../master/openwrt/package/kernel/mt76 package/kernel/mt76
+git clone https://$github/sbwml/package_kernel_mt76 -b main package/kernel/mt76 --depth=1
 
 # iwinfo: add mt7922 device id
 mkdir -p package/network/utils/iwinfo/patches
@@ -167,7 +167,7 @@ rm -rf package/firmware/wireless-regdb
 cp -a ../master/openwrt/package/firmware/wireless-regdb package/firmware/wireless-regdb
 curl -s https://$mirror/openwrt/patch/openwrt-6.x/500-world-regd-5GHz.patch > package/firmware/wireless-regdb/patches/500-world-regd-5GHz.patch
 
-# mac80211 - fix linux 6.6 & add rtw89
+# mac80211 6.9.9 - fix linux 6.6 & add rtw89
 rm -rf package/kernel/mac80211
 git clone https://$github/sbwml/package_kernel_mac80211 package/kernel/mac80211
 
@@ -177,8 +177,6 @@ pushd package/kernel/mac80211/patches/rtl
     curl -Os https://$mirror/openwrt/patch/mac80211/900-hack-rtw88-phy.patch
     curl -Os https://$mirror/openwrt/patch/mac80211/901-wifi-rtw88-8822b-disable-call-trace-when-write-RF-mo.patch
     curl -Os https://$mirror/openwrt/patch/mac80211/905-wifi-rtw88-add-missing-call-to-cancel_work_sync.patch
-    curl -Os https://$mirror/openwrt/patch/mac80211/906-wifi-rtw88-8821c-Fix-beacon-loss-and-disconnect.patch
-    curl -Os https://$mirror/openwrt/patch/mac80211/907-wifi-rtw88-usb-Add-magic-missing-from-register-acces.patch
 popd
 
 # kernel patch
