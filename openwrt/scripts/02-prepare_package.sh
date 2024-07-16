@@ -128,5 +128,5 @@ cp -rf immortalwrt-packages/net/smartdns feeds/packages/net/smartdns
 ln -sf ../../../feeds/packages/net/smartdns ./package/feeds/packages/smartdns
 cp -rf immortalwrt-packages/net/zerotier feeds/packages/net/zerotier
 ln -sf ../../../feeds/packages/net/zerotier ./package/feeds/packages/zerotier
-cp -rf immortalwrt-packages/libs/libcron feeds/packages/libs/libcron
-ln -sf ../../../feeds/packages/libs/libcron ./package/feeds/packages/libcron
+#cp -rf immortalwrt-packages/libs/libcron feeds/packages/libs/libcron
+#ln -sf ../../../feeds/packages/libs/libcron ./package/feeds/packages/libcron
