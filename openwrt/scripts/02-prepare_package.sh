@@ -62,7 +62,7 @@ sed -i "s/ImmortalWrt/OpenWrt/g" package/new/homeproxy/luci-app-homeproxy/po/zh_
 sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/new/homeproxy/luci-app-homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
 
 # neko
-git clone -b luci-app-neko --depth 1 https://github.com/nosignals/neko package/neko
+#git clone -b luci-app-neko --depth 1 https://github.com/nosignals/neko package/neko
 
 # alist
 #git clone https://$github/sbwml/openwrt-alist package/new/alist
