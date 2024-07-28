@@ -55,11 +55,10 @@ git clone https://github.com/QiuSimons/luci-app-daed-next package/new/daed-next
 
 # immortalwrt homeproxy
 #git clone https://github.com/muink/luci-app-homeproxy package/new/homeproxy
-git clone https://github.com/lxiaya/openwrt-homeproxy package/new/homeproxy
 rm -rf package/new/homeproxy/{chinadns-ng,sing-box}
-#git clone https://$github/immortalwrt/homeproxy package/new/homeproxy
-sed -i "s/ImmortalWrt/OpenWrt/g" package/new/homeproxy/luci-app-homeproxy/po/zh_Hans/homeproxy.po
-sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/new/homeproxy/luci-app-homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
+git clone https://$github/immortalwrt/homeproxy package/new/homeproxy
+sed -i "s/ImmortalWrt/OpenWrt/g" package/new/homeproxy/po/zh_Hans/homeproxy.po
+sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/new/homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
 
 # neko
 #git clone -b luci-app-neko --depth 1 https://github.com/nosignals/neko package/neko
