@@ -124,15 +124,6 @@ CONFIG_PACKAGE_luci-app-zerotier=y
 ### ImmortalWrt Proxy - nft
 CONFIG_PACKAGE_luci-app-homeproxy=y
 
-# neko
-CONFIG_PACKAGE_bash=y
-CONFIG_DEFAULT_curl=y
-CONFIG_PACKAGE_jq=y
-CONFIG_PACKAGE_kmod-tun=y
-CONFIG_PACKAGE_php8=y
-CONFIG_PACKAGE_php8-cgi=y
-# CONFIG_PACKAGE_luci-app-neko is not set
-
 ### Mihomo
 CONFIG_PACKAGE_luci-app-mihomo=y
 
