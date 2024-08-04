@@ -11,13 +11,17 @@ git clone https://$github/sbwml/feeds_packages_lang_node-prebuilt feeds/packages
 # Default settings
 git clone https://$github/sbwml/default-settings package/new/default-settings
 
-# boost - 1.84.0
+# boost - 1.85.0
 rm -rf feeds/packages/libs/boost
 cp -a ../master/packages/libs/boost feeds/packages/libs/boost
 
 # lrzsz - 0.12.20
 rm -rf feeds/packages/utils/lrzsz
 git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
+
+# php8
+rm -rf feeds/packages/lang/php8
+cp -a ../master/packages/lang/php8 feeds/packages/lang/php8
 
 # irqbalance - openwrt master
 rm -rf feeds/packages/utils/irqbalance
