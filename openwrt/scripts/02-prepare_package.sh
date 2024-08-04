@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# golang 1.22
+# golang 1.23
 rm -rf feeds/packages/lang/golang
 git clone https://$github/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
 
@@ -18,10 +18,6 @@ cp -a ../master/packages/libs/boost feeds/packages/libs/boost
 # lrzsz - 0.12.20
 rm -rf feeds/packages/utils/lrzsz
 git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
-
-# php8
-rm -rf feeds/packages/lang/php8
-cp -a ../master/packages/lang/php8 feeds/packages/lang/php8
 
 # irqbalance - openwrt master
 rm -rf feeds/packages/utils/irqbalance
