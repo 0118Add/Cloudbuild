@@ -1,20 +1,5 @@
 # mihomo
 git clone https://$github/morytyann/OpenWrt-mihomo  package/new/openwrt-mihomo
-mkdir -p files/etc/mihomo/run/ui
-curl -Lso files/etc/mihomo/run/Country.mmdb https://$github/NobyDa/geoip/raw/release/Private-GeoIP-CN.mmdb
-curl -Lso files/etc/mihomo/run/GeoIP.dat https://$github/MetaCubeX/meta-rules-dat/releases/download/latest/geoip-lite.dat
-curl -Lso files/etc/mihomo/run/GeoSite.dat https://$github/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat
-curl -Lso metacubexd-gh-pages.tar.gz https://$github/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.tar.gz
-tar zxf metacubexd-gh-pages.tar.gz
-mv metacubexd-gh-pages files/etc/mihomo/run/ui/metacubexd
-
-# sysupgrade keep files
-echo "/etc/hotplug.d/iface/*.sh" >> files/etc/sysupgrade.conf
-echo "/etc/mihomo/run/proxies" >> files/etc/sysupgrade.conf
-echo "/etc/mihomo/run/rules" >> files/etc/sysupgrade.conf
-echo "/etc/mihomo/run/config.yaml" >> files/etc/sysupgrade.conf
-echo "/opt" >> files/etc/sysupgrade.conf
-echo "/etc/init.d/nezha-service" >> files/etc/sysupgrade.conf
 
 # configure default-settings
 sed -i 's/mirrors.pku.edu.cn/mirrors.cernet.edu.cn/g' package/new/default-settings/default/zzz-default-settings
