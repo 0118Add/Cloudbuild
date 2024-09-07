@@ -123,10 +123,11 @@ ln -sf ../../../feeds/luci/applications/luci-app-smartdns ./package/feeds/luci/l
 cp -rf immortalwrt-luci/applications/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
 ln -sf ../../../feeds/luci/applications/luci-app-ddns-go ./package/feeds/luci/luci-app-ddns-go
 
+git clone --depth=1 -b 23.05 https://github.com/Lienol/openwrt-luci Lienol-luci
 rm -rf feeds/luci/modules/luci-base
 rm -rf feeds/luci/modules/luci-mod-status
-cp -rf immortalwrt-luci/modules/luci-base feeds/luci/modules/luci-base
-cp -rf immortalwrt-luci/modules/luci-mod-status feeds/luci/modules/luci-mod-status
+cp -rf Lienol-luci/modules/luci-base feeds/luci/modules/luci-base
+cp -rf Lienol-luci/modules/luci-mod-status feeds/luci/modules/luci-mod-status
 # 克隆immortalwrt-packages仓库
 git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/packages.git immortalwrt-packages
 #cp -rf immortalwrt-packages/net/alist feeds/packages/net/alist
