@@ -7,9 +7,9 @@ curl -Lso files/etc/mihomo/run/GeoSite.dat https://$github/MetaCubeX/meta-rules-
 curl -Lso metacubexd-gh-pages.tar.gz https://$github/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.tar.gz
 tar zxf metacubexd-gh-pages.tar.gz
 mv metacubexd-gh-pages files/etc/mihomo/run/ui/metacubexd
-sed -i 's/MihomoTProxy/Mihomo/g' package/new/openwrt-mihomo/luci-app-mihomo/po/zh_Hans/mihomo.po
-sed -i 's/MihomoTProxy/Mihomo/g' package/new/openwrt-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
-sed -i 's/MihomoTProxy/Mihomo/g' package/new/openwrt-mihomo/luci-app-mihomo/htdocs/luci-static/resources/view/mihomo/config.js
+#sed -i 's/MihomoTProxy/Mihomo/g' package/new/openwrt-mihomo/luci-app-mihomo/po/zh_Hans/mihomo.po
+#sed -i 's/MihomoTProxy/Mihomo/g' package/new/openwrt-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
+#sed -i 's/MihomoTProxy/Mihomo/g' package/new/openwrt-mihomo/luci-app-mihomo/htdocs/luci-static/resources/view/mihomo/config.js
 
 # configure default-settings
 sed -i 's/mirrors.pku.edu.cn/mirrors.cernet.edu.cn/g' package/new/default-settings/default/zzz-default-settings
