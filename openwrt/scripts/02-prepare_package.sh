@@ -51,7 +51,8 @@ git clone https://github.com/sbwml/package_new_nethogs package/new/nethogs
 rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
 git clone https://$github/sbwml/openwrt_helloworld package/new/helloworld -b v5
 rm -rf package/new/helloworld/{luci-app-passwall,luci-app-passwall2}
-git clone -b luci-smartdns-dev --single-branch https://github.com/lwb1978/openwrt-passwall package/passwall-luci
+git clone https://github.com/lwb1978/openwrt-passwall package/passwall-luci
+#git clone -b luci-smartdns-dev --single-branch https://github.com/lwb1978/openwrt-passwall package/passwall-luci
 
 # SmartDNS
 rm -rf feeds/luci/applications/luci-app-smartdns
