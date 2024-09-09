@@ -19,6 +19,10 @@ cp -a ../master/packages/libs/boost feeds/packages/libs/boost
 rm -rf feeds/packages/utils/lrzsz
 git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
 
+# liburing - 2.7 (samba-4.21.0)
+rm -rf feeds/packages/libs/liburing
+git clone https://$github/sbwml/feeds_packages_libs_liburing feeds/packages/libs/liburing
+
 # irqbalance - openwrt master
 rm -rf feeds/packages/utils/irqbalance
 cp -a ../master/packages/utils/irqbalance feeds/packages/utils/irqbalance
