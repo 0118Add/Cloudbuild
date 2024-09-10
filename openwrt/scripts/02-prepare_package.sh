@@ -82,7 +82,7 @@ sed -i 's/syslog/none/g' feeds/packages/admin/netdata/files/netdata.conf
 
 # unblockneteasemusic
 git clone https://$github/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/new/luci-app-unblockneteasemusic
-sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/new/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
+sed -i 's/解除网易云音乐播放限制/音乐云解锁/g' package/new/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 
 # Theme
 git clone --depth 1 https://$github/sbwml/luci-theme-argon.git package/new/luci-theme-argon
@@ -121,8 +121,8 @@ git clone https://$github/sbwml/package_kernel_tcp-brutal package/kernel/tcp-bru
 git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/luci.git immortalwrt-luci
 #cp -rf immortalwrt-luci/applications/luci-app-alist feeds/luci/applications/luci-app-alist
 #ln -sf ../../../feeds/luci/applications/luci-app-alist ./package/feeds/luci/luci-app-alist
-cp -rf immortalwrt-luci/applications/luci-app-daed feeds/luci/applications/luci-app-daed
-ln -sf ../../../feeds/luci/applications/luci-app-daed ./package/feeds/luci/luci-app-daed
+#cp -rf immortalwrt-luci/applications/luci-app-daed feeds/luci/applications/luci-app-daed
+#ln -sf ../../../feeds/luci/applications/luci-app-daed ./package/feeds/luci/luci-app-daed
 cp -rf immortalwrt-luci/applications/luci-app-smartdns feeds/luci/applications/luci-app-smartdns
 ln -sf ../../../feeds/luci/applications/luci-app-smartdns ./package/feeds/luci/luci-app-smartdns
 cp -rf immortalwrt-luci/applications/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
@@ -141,8 +141,8 @@ cp -rf immortalwrt-packages/net/ddns-go feeds/packages/net/ddns-go
 ln -sf ../../../feeds/packages/net/ddns-go ./package/feeds/packages/ddns-go
 cp -rf immortalwrt-packages/net/dae feeds/packages/net/dae
 ln -sf ../../../feeds/packages/net/dae ./package/feeds/packages/dae
-cp -rf immortalwrt-packages/net/daed feeds/packages/net/daed
-ln -sf ../../../feeds/packages/net/daed ./package/feeds/packages/daed
+#cp -rf immortalwrt-packages/net/daed feeds/packages/net/daed
+#ln -sf ../../../feeds/packages/net/daed ./package/feeds/packages/daed
 cp -rf immortalwrt-packages/net/smartdns feeds/packages/net/smartdns
 ln -sf ../../../feeds/packages/net/smartdns ./package/feeds/packages/smartdns
 cp -rf immortalwrt-packages/net/zerotier feeds/packages/net/zerotier
