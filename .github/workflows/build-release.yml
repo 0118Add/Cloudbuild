@@ -139,7 +139,7 @@ jobs:
           filen-cli upload "$FILE" OpenWrt/kernel-6.11
         fi
         done
-        filen-cli ls -l OpenWrt/kernel-6.6
+        filen-cli ls -l OpenWrt/kernel-6.11
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
       with:
