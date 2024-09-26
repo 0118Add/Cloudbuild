@@ -36,11 +36,11 @@ rm -rf target/linux/generic/hack-6.11/991-mkbuild.patch
 # configure natflow
 sed -i 's|\[\ \$(grep\ -c\ shortcut_fe\ /etc/config/firewall)\ -eq\ '\''0'\''\ \]\ \&\&\ uci\ set\ firewall.@defaults\[0\].flow_offloading='\''1'\''|\[\ \$(grep\ -c\ shortcut_fe\ /etc/config/firewall)\ -eq\ '\''0'\''\ \]\ \&\&\ \[\ \$(grep\ -c\ natflow_delay_pkts\ /etc/config/firewall)\ -eq\ '\''0'\''\ \]\ \&\&\ uci\ set\ firewall.@defaults\[0\].flow_offloading='\''1'\''|g' package/new/default-settings/default/zzz-default-settings
 # configure default-settings
-sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' package/new/luci-theme-argon/luci-theme-argon/luasrc/view/themes/argon/footer.htm
-sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' package/new/luci-theme-argon/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
-sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' feeds/luci/themes/luci-theme-bootstrap/ucode/template/themes/bootstrap/footer.ut
-sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' feeds/luci/themes/luci-theme-material/ucode/template/themes/material/footer.ut
-sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' feeds/luci/themes/luci-theme-openwrt-2020/ucode/template/themes/openwrt2020/footer.ut
+#sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' package/new/luci-theme-argon/luci-theme-argon/luasrc/view/themes/argon/footer.htm
+#sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' package/new/luci-theme-argon/luci-theme-argon/luasrc/view/themes/argon/footer_login.htm
+#sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' feeds/luci/themes/luci-theme-bootstrap/ucode/template/themes/bootstrap/footer.ut
+#sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' feeds/luci/themes/luci-theme-material/ucode/template/themes/material/footer.ut
+#sed -i 's/openwrt\/luci/JohnsonRan\/opwrt_build_script/g' feeds/luci/themes/luci-theme-openwrt-2020/ucode/template/themes/openwrt2020/footer.ut
 sed -i 's/mirrors.pku.edu.cn/mirrors.cernet.edu.cn/g' package/new/default-settings/default/zzz-default-settings
 sed -i '/# opkg mirror/a case $(uname -m) in\n    x86_64)\n        echo -e '\''src/gz immortalwrt_luci https://mirrors.cernet.edu.cn/openwrt/releases/packages-23.05/x86_64/luci\nsrc/gz immortalwrt_packages https://mirrors.cernet.edu.cn/openwrt/releases/packages-23.05/x86_64/packages'\'' >> /etc/opkg/distfeeds.conf\n        ;;\nesac' package/new/default-settings/default/zzz-default-settings
 sed -i '/# opkg mirror/a echo -e '\''untrusted comment: Public usign key for 23.05 release builds\\nRWRoKXAGS4epF5gGGh7tVQxiJIuZWQ0geStqgCkwRyviQCWXpufBggaP'\'' > /etc/opkg/keys/682970064b87a917' package/new/default-settings/default/zzz-default-settings
