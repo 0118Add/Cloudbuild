@@ -71,7 +71,7 @@ jobs:
         bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/master/openwrt/build.sh) rc2 ${{ github.event.inputs.device }}
         cd openwrt
         tags=$(git describe --abbrev=0 --tags)
-        kernel=$(curl -s "https://raw.githubusercontent.com/${{ github.repository }}/master/tags/kernel-6.6" | awk -F"LINUX_KERNEL_HASH-| =" '/LINUX_KERNEL_HASH/{print $2}')
+        kernel=$(curl -s "https://raw.githubusercontent.com/${{ github.repository }}/master/tags/kernel-6.11" | awk -F"LINUX_KERNEL_HASH-| =" '/LINUX_KERNEL_HASH/{print $2}')
         echo "latest_release=$tags-k$kernel" >>$GITHUB_ENV
 
     - name: Extensive logs after a failed compilation
