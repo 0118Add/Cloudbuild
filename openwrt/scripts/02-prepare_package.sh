@@ -117,6 +117,13 @@ git clone https://$github/sbwml/feeds_packages_utils_unzip feeds/packages/utils/
 # tcp-brutal
 git clone https://$github/sbwml/package_kernel_tcp-brutal package/kernel/tcp-brutal
 
+# 克隆Lienol-luci仓库
+git clone --depth=1 -b master https://github.com/openwrt/luci luci
+rm -rf feeds/luci/modules/luci-base
+rm -rf feeds/luci/modules/luci-mod-status
+cp -rf luci/modules/luci-base feeds/luci/modules/luci-base
+cp -rf luci/modules/luci-mod-status feeds/luci/modules/luci-mod-status
+
 # 克隆immortalwrt-luci仓库
 git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/luci.git immortalwrt-luci
 #rm -rf feeds/luci/modules/luci-base
@@ -132,12 +139,6 @@ ln -sf ../../../feeds/luci/applications/luci-app-smartdns ./package/feeds/luci/l
 cp -rf immortalwrt-luci/applications/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
 ln -sf ../../../feeds/luci/applications/luci-app-ddns-go ./package/feeds/luci/luci-app-ddns-go
 
-# 克隆Lienol-luci仓库
-git clone --depth=1 -b master https://github.com/openwrt/luci luci
-rm -rf feeds/luci/modules/luci-base
-rm -rf feeds/luci/modules/luci-mod-status
-cp -rf luci/modules/luci-base feeds/luci/modules/luci-base
-cp -rf luci/modules/luci-mod-status feeds/luci/modules/luci-mod-status
 # 克隆immortalwrt-packages仓库
 git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/packages.git immortalwrt-packages
 #cp -rf immortalwrt-packages/net/alist feeds/packages/net/alist
