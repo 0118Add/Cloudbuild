@@ -25,7 +25,7 @@ endgroup() {
 #####################################
 
 # script url
-export mirror=raw.githubusercontent.com/JohnsonRan/opwrt_build_script/master
+export mirror=raw.githubusercontent.com/0118Add/cloudbuild/master
 export github=github.com
 export gitea=git.cooluc.com
 
