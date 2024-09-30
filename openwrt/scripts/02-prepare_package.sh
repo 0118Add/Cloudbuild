@@ -82,7 +82,7 @@ sed -i 's/syslog/none/g' feeds/packages/admin/netdata/files/netdata.conf
 
 # unblockneteasemusic
 git clone https://$github/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/new/luci-app-unblockneteasemusic
-sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/new/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
+sed -i 's/解除网易云音乐播放限制/音乐云解锁/g' package/new/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 
 # Theme
 git clone --depth 1 https://$github/sbwml/luci-theme-argon.git package/new/luci-theme-argon
