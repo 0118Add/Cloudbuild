@@ -5,7 +5,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=myautocore
+PKG_NAME:=autocore
 PKG_FLAGS:=nonshared
 PKG_RELEASE:=$(COMMITCOUNT)
 
@@ -16,7 +16,7 @@ PKG_CONFIG_DEPENDS:= \
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/target.mk
 
-define Package/myautocore-arm
+define Package/autocore-arm
   TITLE:=ARM auto core script.
   MAINTAINER:=CN_SZTL
   DEPENDS:=@(arm||aarch64) \
@@ -25,7 +25,7 @@ define Package/myautocore-arm
   VARIANT:=arm
 endef
 
-define Package/myautocore-x86
+define Package/autocore-x86
   TITLE:=x86/x64 auto core loadbalance script.
   MAINTAINER:=Lean / CN_SZTL
   DEPENDS:=@TARGET_x86 +lm-sensors +ethtool
@@ -35,7 +35,7 @@ endef
 define Build/Compile
 endef
 
-define Package/myautocore/install/Default
+define Package/autocore/install/Default
 	$(INSTALL_DIR) $(1)/etc
 	$(CP) ./files/generic/10_system.js $(1)/etc/rpcd_10_system.js
 	$(CP) ./files/generic/luci $(1)/etc/rpcd_luci
@@ -51,20 +51,20 @@ define Package/myautocore/install/Default
 	$(CP) ./files/generic/luci-mod-status-autocore.json $(1)/usr/share/rpcd/acl.d/
 endef
 
-define Package/myautocore-arm/install
-	$(call Package/myautocore/install/Default,$(1))
+define Package/autocore-arm/install
+	$(call Package/autocore/install/Default,$(1))
 
 ifneq ($(filter ipq% %mt7622, $(TARGETID)),)
 	$(INSTALL_BIN) ./files/arm/tempinfo $(1)/sbin/
 endif
 endef
 
-define Package/myautocore-x86/install
-	$(call Package/myautocore/install/Default,$(1))
+define Package/autocore-x86/install
+	$(call Package/autocore/install/Default,$(1))
 
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/x86/autocore $(1)/etc/init.d/
 endef
 
-$(eval $(call BuildPackage,myautocore-arm))
-$(eval $(call BuildPackage,myautocore-x86))
+$(eval $(call BuildPackage,autocore-arm))
+$(eval $(call BuildPackage,autocore-x86))
