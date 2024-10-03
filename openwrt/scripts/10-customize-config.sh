@@ -19,12 +19,6 @@ echo "/etc/init.d/nezha-service" >> files/etc/sysupgrade.conf
 # echo "src/gz mihomo https://morytyann.github.io/OpenWrt-mihomo/x86_64/mihomo" >> "/etc/opkg/customfeeds.conf"
 # sed -i '/# opkg mirror/a echo -e '\''untrusted comment: MihomoTProxy\\nRWSrAXyIqregizvXvG9kJI/JoTkaCCPDy6CQrrVQ4IZ8Qgu+iWMql0UW'\'' > /etc/opkg/keys/ab017c88aab7a08b' package/new/default-settings/default/zzz-default-settings
 
-# add UE-DDNS
-curl -skLo ue-ddns.sh ddns.03k.org
-chmod +x ue-ddns.sh
-mkdir -p files/usr/bin
-mv ue-ddns.sh files/usr/bin/ue-ddns
-
 # change golang to amd64-v2 microarchitecture
 sed -i 's/GO_AMD64:=v1/GO_AMD64:=v2/g' feeds/packages/lang/golang/golang-values.mk
 
