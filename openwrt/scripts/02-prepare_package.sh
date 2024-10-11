@@ -83,11 +83,6 @@ sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/new/homeproxy/htdocs/luci-s
 # alist
 #git clone https://$github/sbwml/openwrt-alist package/new/alist
 
-# Netdata
-rm -rf feeds/packages/admin/netdata
-cp -a ../master/packages/admin/netdata feeds/packages/admin/netdata
-sed -i 's/syslog/none/g' feeds/packages/admin/netdata/files/netdata.conf
-
 # unblockneteasemusic
 git clone https://$github/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/new/luci-app-unblockneteasemusic
 sed -i 's/解除网易云音乐播放限制/音乐云解锁/g' package/new/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
