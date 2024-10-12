@@ -122,28 +122,3 @@ jobs:
         replacesArtifacts: true
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ${{ env.WORKDIR }}/rom/*
-
-    - name: Upload to Filen
-      id: upload
-      continue-on-error: true
-      working-directory: /builder/rom
-      timeout-minutes: 10
-      run: | 
-        sudo curl -skLo /bin/filen-cli https://github.com/FilenCloudDienste/filen-cli/releases/download/v0.0.12/filen-cli-v0.0.12-linux-x64
-        sudo chmod 0755 /bin/filen-cli
-        export FILEN_EMAIL="${{ secrets.FILEN_EMAIL }}"
-        export FILEN_PASSWORD="${{ secrets.FILEN_PWD }}"
-        for FILE in *; do
-        if [ -f "$FILE" ]; then
-          echo "Uploading: $FILE"
-          filen-cli upload "$FILE" OpenWrt/kernel-6.11
-        fi
-        done
-        filen-cli ls -l OpenWrt/kernel-6.11
-    - name: Delete workflow runs
-      uses: Mattraks/delete-workflow-runs@main
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        repository: ${{ github.repository }}
-        retain_days: 0
-        keep_minimum_runs: 2
