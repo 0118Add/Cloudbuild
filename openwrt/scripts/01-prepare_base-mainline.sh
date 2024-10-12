@@ -152,6 +152,20 @@ pushd target/linux/generic/hack-$kernel_version
     curl -Os https://$mirror/openwrt/patch/kernel-"$kernel_version"/lrng/011-LRNG-0025-LRNG-add-hwrand-framework-interface.patch
 popd
 
+# linux-rt - i915
+if [ "$TESTING_KERNEL" = "y" ]; then
+    pushd target/linux/generic/hack-6.12
+        curl -Os https://$mirror/openwrt/patch/kernel-6.12/linux-rt/012-0001-drm-i915-Use-preempt_disable-enable_rt-where-recomme.patch
+        curl -Os https://$mirror/openwrt/patch/kernel-6.12/linux-rt/012-0002-drm-i915-Don-t-disable-interrupts-on-PREEMPT_RT-duri.patch
+        curl -Os https://$mirror/openwrt/patch/kernel-6.12/linux-rt/012-0003-drm-i915-Don-t-check-for-atomic-context-on-PREEMPT_R.patch
+        curl -Os https://$mirror/openwrt/patch/kernel-6.12/linux-rt/012-0004-drm-i915-Disable-tracing-points-on-PREEMPT_RT.patch
+        curl -Os https://$mirror/openwrt/patch/kernel-6.12/linux-rt/012-0005-drm-i915-gt-Use-spin_lock_irq-instead-of-local_irq_d.patch
+        curl -Os https://$mirror/openwrt/patch/kernel-6.12/linux-rt/012-0006-drm-i915-Drop-the-irqs_disabled-check.patch
+        curl -Os https://$mirror/openwrt/patch/kernel-6.12/linux-rt/012-0007-drm-i915-guc-Consider-also-RCU-depth-in-busy-loop.patch
+        curl -Os https://$mirror/openwrt/patch/kernel-6.12/linux-rt/012-0008-Revert-drm-i915-Depend-on-PREEMPT_RT.patch
+    popd
+fi
+
 # linux-firmware: rtw89 / rtl8723d / rtl8821c /i915 firmware
 rm -rf package/firmware/linux-firmware
 git clone https://$github/sbwml/package_firmware_linux-firmware package/firmware/linux-firmware
@@ -210,6 +224,8 @@ rm -rf package/kernel/ath10k-ct
 git clone https://$github/sbwml/package_kernel_ath10k-ct package/kernel/ath10k-ct -b v6.11
 
 # kernel patch
+# random entropy pool size
+[ "$TESTING_KERNEL" = "y" ] && curl -s https://$mirror/openwrt/patch/kernel-$kernel_version/random/010-random-adjust-the-entropy-pool-size-to-4096-bits.patch > target/linux/generic/hack-$kernel_version/010-random-adjust-the-entropy-pool-size-to-4096-bits.patch
 # btf: silence btf module warning messages
 curl -s https://$mirror/openwrt/patch/kernel-$kernel_version/btf/990-btf-silence-btf-module-warning-messages.patch > target/linux/generic/hack-$kernel_version/990-btf-silence-btf-module-warning-messages.patch
 # cpu model
