@@ -224,8 +224,6 @@ rm -rf package/kernel/ath10k-ct
 git clone https://$github/sbwml/package_kernel_ath10k-ct package/kernel/ath10k-ct -b v6.11
 
 # kernel patch
-# random entropy pool size
-[ "$TESTING_KERNEL" = "y" ] && curl -s https://$mirror/openwrt/patch/kernel-$kernel_version/random/010-random-adjust-the-entropy-pool-size-to-4096-bits.patch > target/linux/generic/hack-$kernel_version/010-random-adjust-the-entropy-pool-size-to-4096-bits.patch
 # btf: silence btf module warning messages
 curl -s https://$mirror/openwrt/patch/kernel-$kernel_version/btf/990-btf-silence-btf-module-warning-messages.patch > target/linux/generic/hack-$kernel_version/990-btf-silence-btf-module-warning-messages.patch
 # cpu model
