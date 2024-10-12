@@ -92,8 +92,8 @@ jobs:
           cp -a openwrt/bin/targets/rockchip/*/config.buildinfo info/config.buildinfo
           cd rom && sha256sum *gz > ../info/sha256sums.txt
         elif [ "${{ github.event.inputs.device }}" = "x86_64" ]; then
-          cp -a openwrt/bin/targets/x86/*/*-generic-rootfs.tar.gz rom/
           cp -a openwrt/bin/targets/x86/*/*-squashfs-combined-efi.img.gz rom/
+          cp -a openwrt/bin/targets/x86/*/*-generic-rootfs.tar.gz rom/
           cp -a openwrt/bin/targets/x86/*/config.buildinfo info/config.buildinfo
           cd rom && sha256sum *gz > ../info/sha256sums.txt
         elif [ "${{ github.event.inputs.device }}" = "armv8" ]; then
@@ -122,3 +122,21 @@ jobs:
         replacesArtifacts: true
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ${{ env.WORKDIR }}/rom/*
+
+    - name: Upload to Filen
+      id: upload
+      continue-on-error: true
+      working-directory: /builder/rom
+      timeout-minutes: 10
+      run: | 
+        sudo curl -skLo /bin/filen-cli https://github.com/FilenCloudDienste/filen-cli/releases/download/v0.0.12/filen-cli-v0.0.12-linux-x64
+        sudo chmod 0755 /bin/filen-cli
+        export FILEN_EMAIL="${{ secrets.FILEN_EMAIL }}"
+        export FILEN_PASSWORD="${{ secrets.FILEN_PWD }}"
+        for FILE in *; do
+        if [ -f "$FILE" ]; then
+          echo "Uploading: $FILE"
+          filen-cli upload "$FILE" OpenWrt/OpenWrt-24.10
+        fi
+        done
+        filen-cli ls -l OpenWrt/OpenWrt-24.10
