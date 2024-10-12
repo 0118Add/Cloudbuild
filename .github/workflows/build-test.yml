@@ -122,5 +122,3 @@ jobs:
         replacesArtifacts: true
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ${{ env.WORKDIR }}/rom/*
-        done
-        filen-cli ls -l OpenWrt/OpenWrt-24.10
