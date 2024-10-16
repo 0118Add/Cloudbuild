@@ -16,10 +16,6 @@ echo "/etc/hotplug.d/iface/*.sh" >> files/etc/sysupgrade.conf
 echo "/opt" >> files/etc/sysupgrade.conf
 echo "/etc/init.d/nezha-service" >> files/etc/sysupgrade.conf
 
-# add MihomoTProxy feed
-echo "src/gz mihomo https://morytyann.github.io/OpenWrt-mihomo/x86_64/mihomo" >> "/etc/opkg/customfeeds.conf"
-sed -i '/# opkg mirror/a echo -e '\''untrusted comment: MihomoTProxy\\nRWSrAXyIqregizvXvG9kJI/JoTkaCCPDy6CQrrVQ4IZ8Qgu+iWMql0UW'\'' > /etc/opkg/keys/ab017c88aab7a08b' package/new/default-settings/default/zzz-default-settings
-
 # add UE-DDNS
 curl -skLo ue-ddns.sh ddns.03k.org
 chmod +x ue-ddns.sh
