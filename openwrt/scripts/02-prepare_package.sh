@@ -129,6 +129,11 @@ git clone https://$github/sbwml/package_kernel_tcp-brutal package/kernel/tcp-bru
 #cp -rf luci/modules/luci-base feeds/luci/modules/luci-base
 #cp -rf luci/modules/luci-mod-status feeds/luci/modules/luci-mod-status
 
+# 克隆Lean-luci仓库
+git clone --depth=1 -b openwrt-23.05 https://github.com/coolsnowwolf/luci luci
+cp -rf luci/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
+ln -sf ../../../feeds/luci/applications/luci-app-zerotier ./package/feeds/luci/luci-app-zerotier
+
 # 克隆immortalwrt-luci仓库
 git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/luci.git immortalwrt-luci
 #rm -rf feeds/luci/modules/luci-base
