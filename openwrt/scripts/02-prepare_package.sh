@@ -130,8 +130,8 @@ git clone https://$github/sbwml/package_kernel_tcp-brutal package/kernel/tcp-bru
 #cp -rf luci/modules/luci-mod-status feeds/luci/modules/luci-mod-status
 
 # 克隆Lean-luci仓库
-git clone --depth=1 -b openwrt-23.05 https://github.com/coolsnowwolf/luci luci
-cp -rf luci/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
+git clone --depth=1 -b openwrt-23.05 https://github.com/coolsnowwolf/luci lean-luci
+cp -rf lean-luci/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
 ln -sf ../../../feeds/luci/applications/luci-app-zerotier ./package/feeds/luci/luci-app-zerotier
 sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 
