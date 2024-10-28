@@ -43,6 +43,11 @@ if [ "$ENABLE_DPDK" = "y" ]; then
     sed -i '/-Dcapng=disabled/i\\t-Dnuma=disabled \\' feeds/packages/utils/irqbalance/Makefile
 fi
 
+# natmap
+pushd feeds/luci
+    curl -s https://$mirror/openwrt/patch/luci/applications/luci-app-natmap/0001-luci-app-natmap-add-default-STUN-server-lists.patch | patch -p1
+popd
+
 # OpenClash
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/new/OpenClash
 
