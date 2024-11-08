@@ -3,17 +3,6 @@ name: Build OpenWrt
 on:
   workflow_dispatch:
     inputs:
-      device:
-        description: 'Select the build device'
-        required: true
-        default: 'x86_64'
-        type: choice
-        options:
-          - 'armv8'
-          - 'nanopi-r4s'
-          - 'nanopi-r5s'
-          - 'netgear_r8500'
-          - 'x86_64'
       version:
         description: 'Select the build version'
         required: true
@@ -22,16 +11,29 @@ on:
         options:
         #  - 'release'
           - 'snapshot'
+      lanip:
+        description: 'Input LAN IP address'
+        required: true
+        default: '10.0.0.1'
+        type: string
       build_options:
         description: 'Build options (separate multiple options with spaces)'
         required: false
-        default: 'LAN=10.0.0.1 BUILD_FAST=y ENABLE_LTO=y ENABLE_MOLD=y ENABLE_LRNG=y ENABLE_BPF=y USE_GCC15=y KERNEL_CLANG_LTO=y'
+        default: 'KERNEL_CLANG_LTO=y USE_GCC15=y ENABLE_LTO=y ENABLE_MOLD=y ENABLE_BPF=y ENABLE_LRNG=y BUILD_FAST=y ENABLE_CCACHE=y'
         type: string
 
 jobs:
   build:
-    name: Build ${{ github.event.inputs.device }}
+    name: Build ${{ matrix.device }}
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        device:
+        - x86_64
+        - armv8
+        #- nanopi-r4s
+        #- nanopi-r5s
     defaults:
       run:
         shell: bash
