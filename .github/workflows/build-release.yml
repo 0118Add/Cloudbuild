@@ -1,37 +1,39 @@
-name: Build releases
+name: Build OpenWrt
 
 on:
   workflow_dispatch:
     inputs:
-      device:
-        description: 'Select the build device'
-        required: true
-        default: 'x86_64'
-        type: choice
-        options:
-          - 'armv8'
-          - 'nanopi-r4s'
-          - 'nanopi-r5s'
-          - 'netgear_r8500'
-          - 'x86_64'
       version:
         description: 'Select the build version'
         required: true
-        default: 'release'
+        default: 'snapshot'
         type: choice
         options:
-          - 'release'
+        #  - 'release'
           - 'snapshot'
+      lanip:
+        description: 'Input LAN IP address'
+        required: true
+        default: '10.0.0.1'
+        type: string
       build_options:
         description: 'Build options (separate multiple options with spaces)'
         required: false
-        default: 'LAN=10.0.0.1 KERNEL_CLANG_LTO=y USE_GCC15=y ENABLE_LTO=y ENABLE_MOLD=y ENABLE_BPF=y ENABLE_LRNG=y BUILD_FAST=y'
+        default: 'KERNEL_CLANG_LTO=y USE_GCC15=y ENABLE_LTO=y ENABLE_MOLD=y ENABLE_BPF=y ENABLE_LRNG=y BUILD_FAST=y ENABLE_CCACHE=y'
         type: string
 
 jobs:
   build:
-    name: Build ${{ github.event.inputs.device }}
+    name: Build ${{ matrix.device }}
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        device:
+        - x86_64
+        - armv8
+        - nanopi-r4s
+        - nanopi-r5s
     defaults:
       run:
         shell: bash
@@ -73,15 +75,17 @@ jobs:
       continue-on-error: true
       run: |
         export GITHUB_REPO=${{ github.repository }}
+        export LAN=${{ github.event.inputs.lanip }} 
         export ${{ github.event.inputs.build_options }}
-        bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/master/openwrt/build.sh) ${{ env.build_version }} ${{ github.event.inputs.device }}
+        bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/master/openwrt/build.sh) ${{ env.build_version }} ${{ matrix.device }}
         cd openwrt
         if [ "${{ github.event.inputs.version }}" = release ]; then
           tags=OpenWrt-$(git describe --abbrev=0 --tags)
         else
           tags=snapshot-24.10-$(git log -n 1 --date=format:"%Y%m%d" --format="%cd")-$(git log --pretty=format:"%h" -1)
         fi
-        echo "latest_release=$tags" >>$GITHUB_ENV
+        kernel=$(curl -s "https://raw.githubusercontent.com/${{ github.repository }}/master/tags/kernel-6.12" | awk -F"LINUX_KERNEL_HASH-| =" '/LINUX_KERNEL_HASH/{print $2}')
+        echo "latest_release=$tags-k$kernel" >>$GITHUB_ENV
 
     - name: Extensive logs after a failed compilation
       working-directory: /builder
@@ -120,12 +124,12 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.event.inputs.device }}-openwrt-${{ env.latest_release }}
+        name: ${{ matrix.device }}-openwrt-${{ env.latest_release }}
         path: ${{ env.WORKDIR }}/rom/*
 
     - name: Create release
       continue-on-error: true
-      uses: ncipollo/release-action@v1
+      uses: ncipollo/release-action@v1.14.0
       with:
         name: ${{ env.latest_release }}
         allowUpdates: true
