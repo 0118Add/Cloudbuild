@@ -83,12 +83,6 @@ git clone https://$github/immortalwrt/homeproxy package/new/homeproxy
 sed -i "s/ImmortalWrt/OpenWrt/g" package/new/homeproxy/po/zh_Hans/homeproxy.po
 sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/new/homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
 
-# mihomo
-git clone https://github.com/morytyann/OpenWrt-mihomo  package/openwrt-mihomo
-#sed -i 's/MihomoTProxy/Mihomo/g' package/openwrt-mihomo/luci-app-mihomo/po/zh_Hans/mihomo.po
-#sed -i 's/MihomoTProxy/Mihomo/g' package/openwrt-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
-#sed -i 's/MihomoTProxy/Mihomo/g' package/openwrt-mihomo/luci-app-mihomo/htdocs/luci-static/resources/view/mihomo/config.js
-
 # neko
 #git clone -b luci-app-neko --depth 1 https://github.com/Thaolga/neko package/neko
 
