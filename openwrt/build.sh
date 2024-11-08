@@ -155,7 +155,7 @@ git clone https://$github/immortalwrt/packages master/immortalwrt_packages --dep
 
 if [ -d openwrt ]; then
     cd openwrt
-    [ "$1" = "rc2" ] && echo "$CURRENT_DATE" > version.date
+    echo "1730409337" > version.date # OpenWrt v24.10: set branch defaults
     curl -Os https://$mirror/openwrt/patch/key.tar.gz && tar zxf key.tar.gz && rm -f key.tar.gz
 else
     echo -e "${RED_COLOR}Failed to download source code${RES}"
@@ -290,7 +290,11 @@ export ENABLE_LTO=$ENABLE_LTO
 # kernel - CLANG + LTO; Allow CONFIG_KERNEL_CC=clang / clang-18 / clang-xx
 if [ "$KERNEL_CLANG_LTO" = "y" ]; then
     echo '# Kernel - CLANG LTO' >> .config
-    echo 'CONFIG_KERNEL_CC="clang"' >> .config
+    if [ "$USE_GCC15" = "y" ] && [ "$ENABLE_CCACHE" = "y" ]; then
+        echo 'CONFIG_KERNEL_CC="ccache clang"' >> .config
+    else
+        echo 'CONFIG_KERNEL_CC="clang"' >> .config
+    fi
     echo 'CONFIG_EXTRA_OPTIMIZATION=""' >> .config
     echo '# CONFIG_PACKAGE_kselftests-bpf is not set' >> .config
 fi
