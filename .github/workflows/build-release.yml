@@ -1,0 +1,221 @@
+name: Build OpenWrt
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Select the build version'
+        required: true
+        default: 'snapshot-24.10'
+        type: choice
+        options:
+        #  - 'release'
+          - 'snapshot-24.10'
+      ccache:
+        description: 'Enable ccache (Use Cache to speed up next build)'
+        type: boolean
+        default: true
+      lan_addr:
+        description: 'Setting default LAN address'
+        required: true
+        default: '172.16.1.1'
+        type: string
+      build_options:
+        description: 'Build options (separate multiple options with spaces)'
+        required: false
+        default: 'BUILD_FAST=y ENABLE_BPF=y ENABLE_LTO=y ENABLE_LRNG=y ENABLE_MOLD=y KERNEL_CLANG_LTO=y'
+        type: string
+
+jobs:
+  build:
+    name: Build ${{ matrix.device }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        device:
+        - x86_64
+        - nanopi-r5s
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Setup variables
+      run: |
+        sudo timedatectl set-timezone 'Asia/Shanghai'
+        git config --global user.name 'actions'
+        git config --global user.email 'action@github.com'
+        echo build_dir="/builder" >> "$GITHUB_ENV"
+        [ "${{ github.event.inputs.version }}" = release ] && echo build_version="rc2" >> "$GITHUB_ENV" || echo build_version="dev" >> "$GITHUB_ENV"
+
+    - name: Show system
+      run: |
+        echo -e "\n\e[1;32mCPU:\e[0m"
+        echo "$(grep 'model name' /proc/cpuinfo | head -1 | awk -F ': ' '{print $2}') ($(grep 'cpu MHz' /proc/cpuinfo | head -1 | awk -F ': ' '{print $2}')MHz) x $(grep processor /proc/cpuinfo  | wc -l)"
+        echo -e "\n\e[1;32mMemory:\e[0m"
+        free -h
+        echo -e "\n\e[1;32mStorage:\e[0m"
+        df -Th / /mnt
+        echo -e "\n\e[1;32mSystem:\e[0m"
+        lsb_release -a
+        echo -e "\n\e[1;32mKernel:\e[0m"
+        uname -a
+        echo
+
+    - name: Free disk space
+      uses: sbwml/actions@free-disk
+      with:
+        build-mount-path: /builder
+
+    - name: Build System Setup
+      uses: sbwml/actions@openwrt-build-setup
+
+    - name: Install LLVM
+      uses: sbwml/actions@install-llvm
+
+    - name: Restore Cached
+      if: ${{ github.event.inputs.ccache == 'true' && matrix.device != 'armv8' && matrix.device != 'nanopi-r4s' }}
+      uses: actions/cache/restore@v4
+      with:
+        path: /builder/.ccache
+        key: openwrt-24.10-${{ matrix.device }}-ccache
+
+    - name: Restore Cached (releases)
+      if: ${{ github.event.inputs.ccache == 'true' && matrix.device == 'armv8' || matrix.device == 'nanopi-r4s' }}
+      continue-on-error: true
+      working-directory: /builder
+      run: |
+        curl -s https://api.github.com/repos/${{ github.repository }}/releases | grep 'browser_download_url' | grep ccache | grep ${{ matrix.device }} | awk -F '"' '{print $4}' | grep -v '^$' | xargs -n 1 wget -q
+        cat ${{ matrix.device }}.tar.* | tar -xf - || true
+        rm -rf ${{ matrix.device }}.tar.* || true
+        [ -d .ccache ] && cache_size=$(du -sb .ccache | awk '{print $1}') || cache_size=0
+        cache_size_mb=$(echo "scale=0; ${cache_size} / (1024 * 1024)" | bc)
+        echo "Cache Size: ~${cache_size_mb} MB (${cache_size} B)"
+        echo "Cache restored successfully"
+        echo "Cache restored from key: ${{ matrix.device }}"
+
+    - name: Compile OpenWrt
+      working-directory: /builder
+      id: compile
+      continue-on-error: true
+      run: |
+        export GITHUB_REPO=${{ github.repository }}
+        export ${{ github.event.inputs.build_options }} LAN=${{ github.event.inputs.lan_addr }} USE_GCC15=y
+        [ ${{ github.event.inputs.ccache }} = 'true' ] && export ENABLE_CCACHE=y
+        bash <(curl -sS https://raw.githubusercontent.com/${{ github.repository }}/master/openwrt/build.sh) ${{ env.build_version }} ${{ matrix.device }}
+        cd openwrt
+        if [ "${{ github.event.inputs.version }}" = release ]; then
+          tags=OpenWrt-$(git describe --abbrev=0 --tags)
+        else
+          tags=snapshot-24.10-$(git log -n 1 --date=format:"%Y%m%d" --format="%cd")-$(git log --pretty=format:"%h" -1)
+        fi
+        kernel=$(curl -s "https://raw.githubusercontent.com/${{ github.repository }}/master/tags/kernel-6.12" | awk -F"LINUX_KERNEL_HASH-| =" '/LINUX_KERNEL_HASH/{print $2}')
+        echo "latest_release=$tags-k$kernel" >>$GITHUB_ENV
+
+    - name: Extensive logs after a failed compilation
+      working-directory: /builder
+      if: steps.compile.outcome == 'failure'
+      run: |
+        cd openwrt
+        make V=s
+
+    - name: Delete Cached
+      if: ${{ github.event.inputs.ccache == 'true' && matrix.device != 'armv8' && matrix.device != 'nanopi-r4s' }}
+      continue-on-error: true
+      working-directory: /builder
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
+      run: |
+        gh cache delete openwrt-24.10-${{ matrix.device }}-ccache || true
+
+    - name: Save Cached
+      if: ${{ github.event.inputs.ccache == 'true' && matrix.device != 'armv8' && matrix.device != 'nanopi-r4s' }}
+      continue-on-error: true
+      uses: actions/cache/save@v4
+      with:
+        path: /builder/.ccache
+        key: openwrt-24.10-${{ matrix.device }}-ccache
+
+    - name: Create ccache tar files
+      if: ${{ github.event.inputs.ccache == 'true' && matrix.device == 'armv8' || matrix.device == 'nanopi-r4s' }}
+      continue-on-error: true
+      working-directory: /builder
+      run: |
+        mkdir -p ccache
+        tar cf - .ccache | split -d -b 1800m - ccache/${{ matrix.device }}.tar.
+
+    - name: Upload Cached (releases - ccache)
+      if: ${{ github.event.inputs.ccache == 'true' && matrix.device == 'armv8' || matrix.device == 'nanopi-r4s' }}
+      continue-on-error: true
+      uses: ncipollo/release-action@v1.14.0
+      with:
+        name: ccache
+        allowUpdates: true
+        tag: ccache
+        commit: master
+        replacesArtifacts: true
+        prerelease: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: |
+          ${{ env.build_dir }}/ccache/*
+
+    - name: Prepare Firmware Files
+      working-directory: /builder
+      run: |
+        mkdir -p rom info
+        if [ "${{ matrix.device }}" = "nanopi-r5s" ]; then
+          cp -a openwrt/bin/targets/rockchip/*/*-r5s-squashfs-sysupgrade.img.gz rom/
+          cp -a openwrt/bin/targets/rockchip/*/*.manifest info/manifest.txt
+          cp -a openwrt/bin/targets/rockchip/*/config.buildinfo info/config.buildinfo
+          cd rom && sha256sum *gz > ../info/sha256sums.txt
+        elif [ "${{ matrix.device }}" = "x86_64" ]; then
+          cp -a openwrt/bin/targets/x86/*/*-squashfs-combined-efi.img.gz rom/
+          cp -a openwrt/bin/targets/x86/*/*-x86-64-generic.manifest info/manifest.txt
+          cp -a openwrt/bin/targets/x86/*/config.buildinfo info/config.buildinfo
+          cd rom && sha256sum *gz > ../info/sha256sums.txt
+        fi
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.device }}-openwrt-${{ env.latest_release }}
+        path: ${{ env.build_dir }}/rom/*
+
+    - name: Create release
+      continue-on-error: true
+      uses: ncipollo/release-action@v1.14.0
+      with:
+        name: ${{ env.latest_release }}
+        allowUpdates: true
+        tag: ${{ env.latest_release }}
+        commit: master
+        replacesArtifacts: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: ${{ env.build_dir }}/rom/*
+
+    - name: Upload to Filen
+      id: upload
+      continue-on-error: true
+      working-directory: /builder/rom
+      timeout-minutes: 10
+      run: | 
+        sudo curl -skLo /bin/filen-cli https://github.com/FilenCloudDienste/filen-cli/releases/download/v0.0.14/filen-cli-v0.0.14-linux-x64
+        sudo chmod +x /bin/filen-cli
+        export FILEN_EMAIL="${{ secrets.FILEN_EMAIL }}"
+        export FILEN_PASSWORD="${{ secrets.FILEN_PWD }}"
+        for FILE in *; do
+        if [ -f "$FILE" ]; then
+          echo "Uploading: $FILE"
+          filen-cli upload "$FILE" OpenWrt/${{ matrix.device }}
+        fi
+        done
+        filen-cli ls -l OpenWrt/${{ matrix.device }}
+    - name: Delete workflow runs
+      uses: Mattraks/delete-workflow-runs@main
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: ${{ github.repository }}
+        retain_days: 0
+        keep_minimum_runs: 2
