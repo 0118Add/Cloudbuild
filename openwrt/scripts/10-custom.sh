@@ -21,17 +21,6 @@ chmod +x ue-ddns.sh
 mkdir -p files/usr/bin
 mv ue-ddns.sh files/usr/bin/ue-ddns
 
-# https://github.com/henrygd/beszel
-if [ "$platform" = "rk3568" ]; then
-    wget https://github.com/henrygd/beszel/releases/latest/download/beszel-agent_linux_arm64.tar.gz
-    tar zxvf beszel-agent_linux_arm64.tar.gz
-    mv beszel-agent files/usr/bin
-else
-    wget https://github.com/henrygd/beszel/releases/latest/download/beszel-agent_linux_amd64.tar.gz
-    tar zxvf beszel-agent_linux_amd64.tar.gz
-    mv beszel-agent files/usr/bin
-fi
-
 # from pmkol/openwrt-plus
 # comment out the following line to restore the full description
 sed -i '/# timezone/i grep -q '\''/tmp/sysinfo/model'\'' /etc/rc.local || sudo sed -i '\''/exit 0/i [ "$(cat /sys\\/class\\/dmi\\/id\\/sys_vendor 2>\\/dev\\/null)" = "Default string" ] \&\& echo "x86_64" > \\/tmp\\/sysinfo\\/model'\'' /etc/rc.local\n' package/new/default-settings/default/zzz-default-settings
