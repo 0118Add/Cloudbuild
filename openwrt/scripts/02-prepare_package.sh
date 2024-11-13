@@ -9,7 +9,7 @@ rm -rf feeds/packages/lang/node
 git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-24.10 feeds/packages/lang/node
 
 # Default settings
-git clone https://$github/sbwml/default-settings package/new/default-settings
+git clone https://$github/sbwml/default-settings package/new/default-settings -b openwrt-24.10
 
 # boost - bump version
 if [ "$version" = "rc2" ]; then
