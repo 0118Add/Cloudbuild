@@ -30,8 +30,8 @@ jobs:
       #默认地址
       WRT_IP: 10.0.0.1
       #默认源码
-      WRT_URL: https://github.com/padavanonly/immortalwrt-mt798x.git
+      WRT_URL: https://github.com/padavanonly/immortalwrt-mt798x-23.05
       #默认分支
-      WRT_BRANCH: openwrt-21.02
+      WRT_BRANCH: openwrt-23.05
       #内存压缩，可选参数，默认关闭，256内存推荐开启
       #WRT_SHRINK: true
