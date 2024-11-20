@@ -25,7 +25,7 @@ endgroup() {
 #####################################
 
 # script url
-export mirror=http://127.0.0.1:8080
+export mirror=raw.githubusercontent.com/0118Add/cloudbuild/main
 export gitea=git.cooluc.com
 export github=github.com
 
