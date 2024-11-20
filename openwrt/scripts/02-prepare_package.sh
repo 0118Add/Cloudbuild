@@ -11,18 +11,10 @@ git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages
 # Default settings
 git clone https://$github/sbwml/default-settings package/new/default-settings -b openwrt-24.10
 
-# boost - bump version
-if [ "$version" = "rc2" ]; then
-    rm -rf feeds/packages/libs/boost
-    cp -a ../master/packages/libs/boost feeds/packages/libs/boost
-fi
-
 # pcre - 8.45
-if [ "$version" = "snapshots-24.10" ]; then
-    mkdir -p package/libs/pcre
-    curl -s https://$mirror/openwrt/patch/pcre/Makefile > package/libs/pcre/Makefile
-    curl -s https://$mirror/openwrt/patch/pcre/Config.in > package/libs/pcre/Config.in
-fi
+mkdir -p package/libs/pcre
+curl -s $mirror/openwrt/patch/pcre/Makefile > package/libs/pcre/Makefile
+curl -s $mirror/openwrt/patch/pcre/Config.in > package/libs/pcre/Config.in
 
 # lrzsz - 0.12.20
 rm -rf feeds/packages/utils/lrzsz
@@ -32,16 +24,9 @@ git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
 rm -rf feeds/packages/libs/liburing
 git clone https://$github/sbwml/feeds_packages_libs_liburing feeds/packages/libs/liburing
 
-# irqbalance - openwrt master
-if [ "$version" = "rc2" ]; then
-    rm -rf feeds/packages/utils/irqbalance
-    cp -a ../master/packages/utils/irqbalance feeds/packages/utils/irqbalance
-fi
 # irqbalance: disable build with numa
-if [ "$ENABLE_DPDK" = "y" ]; then
-    curl -s https://$mirror/openwrt/patch/irqbalance/011-meson-numa.patch > feeds/packages/utils/irqbalance/patches/011-meson-numa.patch
-    sed -i '/-Dcapng=disabled/i\\t-Dnuma=disabled \\' feeds/packages/utils/irqbalance/Makefile
-fi
+curl -s $mirror/openwrt/patch/irqbalance/011-meson-numa.patch > feeds/packages/utils/irqbalance/patches/011-meson-numa.patch
+sed -i '/-Dcapng=disabled/i\\t-Dnuma=disabled \\' feeds/packages/utils/irqbalance/Makefile
 
 # natmap
 pushd feeds/luci
