@@ -35,7 +35,7 @@ jobs:
       matrix:
         device:
         - x86_64
-        #- armv8
+        - armv8
     defaults:
       run:
         shell: bash
