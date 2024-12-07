@@ -2,9 +2,6 @@
 
 #################################################################
 
-# autocore
-git clone https://$github/sbwml/autocore-arm -b openwrt-24.10 package/system/autocore
-
 # rockchip - target - r4s/r5s only
 rm -rf target/linux/rockchip
 git clone https://nanopi:nanopi@$gitea/sbwml/target_linux_rockchip-6.x target/linux/rockchip -b openwrt-24.10
