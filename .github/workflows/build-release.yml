@@ -6,10 +6,10 @@ on:
       version:
         description: 'Select the build version'
         required: true
-        default: 'snapshot-24.10'
+        default: 'release'
         type: choice
         options:
-        #  - 'release'
+          - 'release'
           - 'snapshot-24.10'
       ccache:
         description: 'Enable ccache (Use Cache to speed up next build)'
@@ -53,6 +53,8 @@ jobs:
         git config --global user.name 'actions'
         git config --global user.email 'action@github.com'
         echo build_dir="/builder" >> "$GITHUB_ENV"
+        echo branch="openwrt-24.10" >> "$GITHUB_ENV"
+        [ "${{ matrix.device }}" = nanopi-r5s ] && echo arch="aarch64_generic" >> "$GITHUB_ENV" || echo arch="x86_64" >> "$GITHUB_ENV"
         [ "${{ github.event.inputs.version }}" = release ] && echo build_version="rc2" >> "$GITHUB_ENV" || echo build_version="dev" >> "$GITHUB_ENV"
 
     - name: Show system
