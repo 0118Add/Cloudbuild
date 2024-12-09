@@ -14,6 +14,9 @@ git clone https://$github/8688Add/autocore-arm -b openwrt-24.10 package/system/a
 # Default settings
 git clone https://$github/sbwml/default-settings package/new/default-settings -b openwrt-24.10
 
+# 设置 root 用户密码为 password
+sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.::0:99999:7:::/g' package/base-files/files/etc/shadow
+
 # wwan
 git clone https://github.com/sbwml/wwan-packages package/new/wwan
 
