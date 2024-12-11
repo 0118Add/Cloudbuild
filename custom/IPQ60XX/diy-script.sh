@@ -45,6 +45,7 @@ git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/luci-a
 git clone --depth=1 -b main https://github.com/xiaorouji/openwrt-passwall package/passwall
 git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/luci-app-unblockneteasemusic
 git clone https://github.com/morytyann/OpenWrt-mihomo  package/openwrt-mihomo
+git clone -b neko --depth 1 https://github.com/Thaolga/luci-app-nekoclash package/nekoclash
 
 # 修改插件名字
 #sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/custom/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
