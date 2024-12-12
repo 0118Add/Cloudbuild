@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 env:
-  REPO_URL: https://github.com/8688Add/openwrt-6.x
+  REPO_URL: https://github.com/LiBwrt/openwrt-6.x
   REPO_BRANCH: kernel-6.12
   FEEDS_CONF: feeds/feeds.conf.default
   CONFIG_FILE: config/ipq60xx-6.12.config
