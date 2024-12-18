@@ -46,7 +46,7 @@ popd
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/new/OpenClash
 
 # ddns-go
-#git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
+git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
 
 # netkit-ftp
 git clone https://$github/sbwml/package_new_ftp package/new/ftp
@@ -138,14 +138,14 @@ ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/lu
 #ln -sf ../../../feeds/luci/applications/luci-app-daed ./package/feeds/luci/luci-app-daed
 cp -rf immortalwrt-luci/applications/luci-app-smartdns feeds/luci/applications/luci-app-smartdns
 ln -sf ../../../feeds/luci/applications/luci-app-smartdns ./package/feeds/luci/luci-app-smartdns
-cp -rf immortalwrt-luci/applications/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
-ln -sf ../../../feeds/luci/applications/luci-app-ddns-go ./package/feeds/luci/luci-app-ddns-go
+#cp -rf immortalwrt-luci/applications/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
+#ln -sf ../../../feeds/luci/applications/luci-app-ddns-go ./package/feeds/luci/luci-app-ddns-go
 # 克隆immortalwrt-packages仓库
 git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/packages.git immortalwrt-packages
 #cp -rf immortalwrt-packages/net/alist feeds/packages/net/alist
 #ln -sf ../../../feeds/packages/net/alist ./package/feeds/packages/alist
-cp -rf immortalwrt-packages/net/ddns-go feeds/packages/net/ddns-go
-ln -sf ../../../feeds/packages/net/ddns-go ./package/feeds/packages/ddns-go
+#cp -rf immortalwrt-packages/net/ddns-go feeds/packages/net/ddns-go
+#ln -sf ../../../feeds/packages/net/ddns-go ./package/feeds/packages/ddns-go
 cp -rf immortalwrt-packages/net/dae feeds/packages/net/dae
 ln -sf ../../../feeds/packages/net/dae ./package/feeds/packages/dae
 #cp -rf immortalwrt-packages/net/daed feeds/packages/net/daed
