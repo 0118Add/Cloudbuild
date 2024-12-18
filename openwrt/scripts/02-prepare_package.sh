@@ -12,13 +12,13 @@ git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages
 git clone https://$github/8688Add/autocore-arm -b openwrt-24.10 package/system/autocore
 
 # Default settings
-git clone https://$github/sbwml/default-settings package/new/default-settings -b openwrt-24.10
+git clone https://$github/sbwml/default-settings package/default-settings -b openwrt-24.10
 
 # 设置 root 用户密码为 password
 sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.::0:99999:7:::/g' package/base-files/files/etc/shadow
 
 # wwan
-git clone https://github.com/sbwml/wwan-packages package/new/wwan
+git clone https://github.com/sbwml/wwan-packages package/wwan
 
 # pcre - 8.45
 mkdir -p package/libs/pcre
@@ -27,7 +27,7 @@ curl -s $mirror/openwrt/patch/pcre/Config.in > package/libs/pcre/Config.in
 
 # lrzsz - 0.12.20
 rm -rf feeds/packages/utils/lrzsz
-git clone https://$github/sbwml/packages_utils_lrzsz package/new/lrzsz
+git clone https://$github/sbwml/packages_utils_lrzsz package/lrzsz
 
 # liburing - 2.7 (samba-4.21.0)
 rm -rf feeds/packages/libs/liburing
@@ -43,16 +43,16 @@ pushd feeds/luci
 popd
 
 # OpenClash
-git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/new/OpenClash
+git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/OpenClash
 
 # ddns-go
 git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
 
 # netkit-ftp
-git clone https://$github/sbwml/package_new_ftp package/new/ftp
+git clone https://$github/sbwml/package_new_ftp package/ftp
 
 # nethogs
-git clone https://github.com/sbwml/package_new_nethogs package/new/nethogs
+git clone https://github.com/sbwml/package_new_nethogs package/nethogs
 
 # SSRP & Passwall
 rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
@@ -66,16 +66,16 @@ rm -rf feeds/luci/applications/luci-app-smartdns
 rm -rf feeds/packages/net/smartdns
 
 # DAED
-git clone https://$github/sbwml/luci-app-daed package/new/daed
+git clone https://$github/sbwml/luci-app-daed package/daed
 #git clone -b master --depth 1 https://github.com/QiuSimons/luci-app-daed package/new/daed
 #git clone https://github.com/QiuSimons/luci-app-daed-next package/new/daed-next
 
 # immortalwrt homeproxy
 #git clone https://github.com/muink/luci-app-homeproxy package/new/homeproxy
 rm -rf package/new/homeproxy/{chinadns-ng,sing-box}
-git clone https://$github/immortalwrt/homeproxy package/new/homeproxy
-sed -i "s/ImmortalWrt/OpenWrt/g" package/new/homeproxy/po/zh_Hans/homeproxy.po
-sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/new/homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
+git clone https://$github/immortalwrt/homeproxy package/homeproxy
+sed -i "s/ImmortalWrt/OpenWrt/g" package/homeproxy/po/zh_Hans/homeproxy.po
+sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
 
 # mihomo
 #git clone https://github.com/morytyann/OpenWrt-mihomo  package/openwrt-mihomo
@@ -90,12 +90,12 @@ sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/new/homeproxy/htdocs/luci-s
 #git clone https://$github/sbwml/openwrt-alist package/new/alist
 
 # unblockneteasemusic
-git clone https://$github/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/new/luci-app-unblockneteasemusic
-sed -i 's/解除网易云音乐播放限制/音乐云解锁/g' package/new/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
+git clone https://$github/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/luci-app-unblockneteasemusic
+sed -i 's/解除网易云音乐播放限制/音乐云解锁/g' package/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 
 # Theme
-git clone --depth=1 -b openwrt-24.10 https://github.com/sbwml/luci-theme-argon package/new/luci-theme-argon
-sed -i 's/Argon 主题设置/主题设置/g' package/new/luci-theme-argon/luci-app-argon-config/po/zh_Hans/argon-config.po
+git clone --depth=1 -b openwrt-24.10 https://github.com/sbwml/luci-theme-argon package/luci-theme-argon
+sed -i 's/Argon 主题设置/主题设置/g' package/luci-theme-argon/luci-app-argon-config/po/zh_Hans/argon-config.po
 
 # iperf3
 sed -i "s/D_GNU_SOURCE/D_GNU_SOURCE -funroll-loops/g" feeds/packages/net/iperf3/Makefile
@@ -103,14 +103,14 @@ sed -i "s/D_GNU_SOURCE/D_GNU_SOURCE -funroll-loops/g" feeds/packages/net/iperf3/
 # custom packages
 rm -rf feeds/packages/utils/coremark
 #rm -rf feeds/packages/net/zerotier
-git clone https://$github/8688Add/openwrt_pkgs package/new/custom --depth=1
+git clone https://$github/8688Add/openwrt_pkgs package/custom --depth=1
 # coremark - prebuilt with gcc15
 if [ "$platform" = "rk3568" ]; then
-    curl -s https://$mirror/openwrt/patch/coremark/coremark.aarch64-4-threads > package/new/custom/coremark/src/musl/coremark.aarch64
+    curl -s https://$mirror/openwrt/patch/coremark/coremark.aarch64-4-threads > package/custom/coremark/src/musl/coremark.aarch64
 elif [ "$platform" = "rk3399" ]; then
-    curl -s https://$mirror/openwrt/patch/coremark/coremark.aarch64-6-threads > package/new/custom/coremark/src/musl/coremark.aarch64
+    curl -s https://$mirror/openwrt/patch/coremark/coremark.aarch64-6-threads > package/custom/coremark/src/musl/coremark.aarch64
 elif [ "$platform" = "armv8" ]; then
-    curl -s https://$mirror/openwrt/patch/coremark/coremark.aarch64-16-threads > package/new/custom/coremark/src/musl/coremark.aarch64
+    curl -s https://$mirror/openwrt/patch/coremark/coremark.aarch64-16-threads > package/custom/coremark/src/musl/coremark.aarch64
 fi
 
 # luci-compat - fix translation
