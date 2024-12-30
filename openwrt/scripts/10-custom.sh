@@ -9,7 +9,7 @@
     #curl -Lso metacubexd-gh-pages.tar.gz https://$github/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.tar.gz
     #tar zxf metacubexd-gh-pages.tar.gz
     #mv metacubexd-gh-pages files/etc/mihomo/run/ui/metacubexd
-fi
+#fi
 
 # from pmkol/openwrt-plus
 # comment out the following line to restore the full description
