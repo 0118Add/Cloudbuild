@@ -22,7 +22,7 @@ t: &t {type: url-test, url: https://1.1.1.1/generate_204, interval: 300, toleran
 proxy-providers:
   custom:
     <<: *p
-    url: "https://edgeonereclaim.ikkt.cn/api/v1/client/subscribe?token=adb8a1da25e83a2a5f6b2af809adeae9"
+    url: ""
     path: ./proxy_provider/custom.yaml
     override:
       skip-cert-verify: true
