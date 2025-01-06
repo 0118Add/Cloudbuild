@@ -102,7 +102,7 @@ sed -i "s/D_GNU_SOURCE/D_GNU_SOURCE -funroll-loops/g" feeds/packages/net/iperf3/
 
 # custom packages
 rm -rf feeds/packages/utils/coremark
-#rm -rf feeds/packages/net/zerotier
+rm -rf feeds/packages/net/zerotier
 git clone https://$github/8688Add/openwrt_pkgs package/custom --depth=1
 # coremark - prebuilt with gcc15
 if [ "$platform" = "rk3568" ]; then
@@ -131,17 +131,19 @@ git clone https://$github/sbwml/package_kernel_tcp-brutal package/kernel/tcp-bru
 #sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 
 # 克隆immortalwrt-luci仓库
-git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/luci.git immortalwrt-luci
-cp -rf immortalwrt-luci/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
-ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
+git clone --depth=1 -b openwrt-24.10 https://github.com/immortalwrt/luci.git immortalwrt-luci
+#cp -rf immortalwrt-luci/applications/luci-app-cpufreq feeds/luci/applications/luci-app-cpufreq
+#ln -sf ../../../feeds/luci/applications/luci-app-cpufreq ./package/feeds/luci/luci-app-cpufreq
 #cp -rf immortalwrt-luci/applications/luci-app-daed feeds/luci/applications/luci-app-daed
 #ln -sf ../../../feeds/luci/applications/luci-app-daed ./package/feeds/luci/luci-app-daed
 cp -rf immortalwrt-luci/applications/luci-app-smartdns feeds/luci/applications/luci-app-smartdns
 ln -sf ../../../feeds/luci/applications/luci-app-smartdns ./package/feeds/luci/luci-app-smartdns
 #cp -rf immortalwrt-luci/applications/luci-app-ddns-go feeds/luci/applications/luci-app-ddns-go
 #ln -sf ../../../feeds/luci/applications/luci-app-ddns-go ./package/feeds/luci/luci-app-ddns-go
+cp -rf immortalwrt-luci/applications/luci-app-zerotier feeds/luci/applications/luci-app-zerotier
+ln -sf ../../../feeds/luci/applications/luci-app-zerotier ./package/feeds/luci/luci-app-zerotier
 # 克隆immortalwrt-packages仓库
-git clone --depth=1 -b openwrt-23.05 https://github.com/immortalwrt/packages.git immortalwrt-packages
+git clone --depth=1 -b openwrt-24.10 https://github.com/immortalwrt/packages.git immortalwrt-packages
 #cp -rf immortalwrt-packages/net/alist feeds/packages/net/alist
 #ln -sf ../../../feeds/packages/net/alist ./package/feeds/packages/alist
 #cp -rf immortalwrt-packages/net/ddns-go feeds/packages/net/ddns-go
@@ -152,8 +154,8 @@ ln -sf ../../../feeds/packages/net/dae ./package/feeds/packages/dae
 #ln -sf ../../../feeds/packages/net/daed ./package/feeds/packages/daed
 cp -rf immortalwrt-packages/net/smartdns feeds/packages/net/smartdns
 ln -sf ../../../feeds/packages/net/smartdns ./package/feeds/packages/smartdns
-#cp -rf immortalwrt-packages/net/zerotier feeds/packages/net/zerotier
-#ln -sf ../../../feeds/packages/net/zerotier ./package/feeds/packages/zerotier
+cp -rf immortalwrt-packages/net/zerotier feeds/packages/net/zerotier
+ln -sf ../../../feeds/packages/net/zerotier ./package/feeds/packages/zerotier
 
 # net.netfilter.nf_conntrack_max from 16384 to 65535
 sed -i 's/net.netfilter.nf_conntrack_max=.*/net.netfilter.nf_conntrack_max=65535/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
@@ -161,6 +163,7 @@ sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' packag
 
 # 修改系统文件
 sed -i 's/WireGuard/WiGd状态/g' feeds/luci/protocols/luci-proto-wireguard/root/usr/share/luci/menu.d/luci-proto-wireguard.json
+sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 curl -fsSL https://raw.githubusercontent.com/0118Add/Cloudbuild/main/patches/29_ports.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js
 
 # comment out the following line to restore the full description
