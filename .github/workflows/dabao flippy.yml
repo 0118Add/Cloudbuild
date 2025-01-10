@@ -65,7 +65,7 @@ jobs:
       uses: 0118Add/flippy-openwrt-actions@main
       env:
         SCRIPT_REPO_URL: 0118Add/openwrt_packit
-        OPENWRT_ARMVIRT: https://github.com/0118Add/flippy-dabao/releases/download/ARMv8_immortalwrt/immortalwrt-armsr-armv8-generic-rootfs.tar.gz
+        OPENWRT_ARMVIRT: https://github.com/0118Add/Cloudbuild/releases/download/Armv8/openwrt-armvirt-64-generic-rootfs.tar.gz
         PACKAGE_SOC: vplus_s905x3_s905d_s922x
         WHOAMI: BGG
         #OPENWRT_VER: "R22.10.10"
