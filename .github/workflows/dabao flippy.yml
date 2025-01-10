@@ -1,4 +1,4 @@
-name: dabao flippy immortalwrt
+name: dabao flippy
 
 on:
   repository_dispatch:
