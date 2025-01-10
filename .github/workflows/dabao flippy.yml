@@ -105,8 +105,3 @@ jobs:
           
           当前使用版本:【编译前的最后一次[➦主源码](https://github.com/openwrt/openwrt)更新记录】
           ${{ env.useVersionInfo }}
-    - name: Delete workflow runs
-      uses: GitRML/delete-workflow-runs@main
-      with:
-        retain_days: 1
-        keep_minimum_runs: 3
