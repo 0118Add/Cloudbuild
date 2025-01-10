@@ -66,7 +66,7 @@ jobs:
       env:
         SCRIPT_REPO_URL: 0118Add/openwrt_packit
         OPENWRT_ARMVIRT: https://github.com/0118Add/Cloudbuild/releases/download/Armv8/openwrt-armvirt-64-generic-rootfs.tar.gz
-        PACKAGE_SOC: vplus_s905x3_s905d_s922x
+        PACKAGE_SOC: vplus_s905x3_s905d_s922x_s922x-ct2000
         WHOAMI: BGG
         #OPENWRT_VER: "R22.10.10"
         #BUILD: $(date '+%Y-%m-%d')
@@ -103,7 +103,7 @@ jobs:
           ## 以下为电视盒子固件
           默认IP：10.0.0.1 默认密码： password
           
-          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/immortalwrt/immortalwrt)更新记录】
+          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/openwrt/openwrt)更新记录】
           ${{ env.useVersionInfo }}
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
