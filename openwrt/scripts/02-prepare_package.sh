@@ -43,6 +43,10 @@ pushd feeds/luci
     curl -s https://$mirror/openwrt/patch/luci/applications/luci-app-natmap/0001-luci-app-natmap-add-default-STUN-server-lists.patch | patch -p1
 popd
 
+# luci-app-filemanager
+rm -rf feeds/luci/applications/luci-app-filemanager
+git clone https://$github/sbwml/luci-app-filemanager package/luci-app-filemanager
+
 # OpenClash
 git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/OpenClash
 
