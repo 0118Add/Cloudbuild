@@ -9,7 +9,8 @@ rm -rf feeds/packages/lang/node
 git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt -b packages-24.10 feeds/packages/lang/node
 
 # autocore
-git clone https://$github/8688Add/autocore-arm -b openwrt-24.10 package/system/autocore
+#git clone https://$github/8688Add/autocore-arm -b openwrt-24.10 package/system/autocore
+git clone https://$github/0118Add/X86-N1-Actions package/system/autocore
 
 # Default settings
 git clone https://$github/sbwml/default-settings package/default-settings -b openwrt-24.10
