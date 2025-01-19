@@ -24,7 +24,7 @@ rm -f "$TMPDIR/etc/bench.log" && \
 sss=$(date +%s) && \
 ddd=$((sss/86400)) && \
 sed -e "s/:0:0:99999:7:::/:${ddd}:0:99999:7:::/" -i "${TMPDIR}/etc/shadow" && \
-echo "17 3 * * * /etc/coremark.sh" >> "$TMPDIR/etc/crontabs/root" && \
+#echo "17 3 * * * /etc/coremark.sh" >> "$TMPDIR/etc/crontabs/root" && \
 rm -rf "$TMPDIR/lib/firmware/*" "$TMPDIR/lib/modules/*" && \
 (cd "$TMPDIR" && tar cf ../openwrt-armvirt-64-generic-rootfs-patched.tar .) && \
 rm -f DockerImg-OpenwrtArm64-${TAG}.gz && \
