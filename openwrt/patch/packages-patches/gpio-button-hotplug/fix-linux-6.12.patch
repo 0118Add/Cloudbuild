@@ -1,26 +1,33 @@
+From 08296f25e8781430db92aead4d45b11a6ee9317f Mon Sep 17 00:00:00 2001
+From: coolsnowwolf <31687149+coolsnowwolf@users.noreply.github.com>
+Date: Thu, 23 Jan 2025 04:20:57 +0800
+Subject: [PATCH] gpio-button-hotplug: fix for linux 6.12
+
+---
+ package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
 diff --git a/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c b/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c
-index 52346c2..75f6155 100644
+index 9876dee90f..cfbf56ab50 100644
 --- a/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c
 +++ b/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c
-@@ -674,7 +674,11 @@ static void gpio_keys_irq_close(struct gpio_keys_button_dev *bdev)
- 	}
- }
- 
-+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 11, 0)
-+static void gpio_keys_remove(struct platform_device *pdev)
-+#else
- static int gpio_keys_remove(struct platform_device *pdev)
-+#endif
- {
- 	struct gpio_keys_button_dev *bdev = platform_get_drvdata(pdev);
- 
-@@ -685,7 +689,9 @@ static int gpio_keys_remove(struct platform_device *pdev)
- 	else
- 		gpio_keys_irq_close(bdev);
- 
-+#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 11, 0)
- 	return 0;
-+#endif
- }
- 
+@@ -690,7 +690,9 @@ static int gpio_keys_remove(struct platform_device *pdev)
+
  static struct platform_driver gpio_keys_driver = {
+ 	.probe	= gpio_keys_probe,
++#if LINUX_VERSION_CODE < KERNEL_VERSION(6,12,0)
+ 	.remove	= gpio_keys_remove,
++#endif
+ 	.driver	= {
+ 		.name	= "gpio-keys",
+ 		.of_match_table = of_match_ptr(gpio_keys_of_match),
+@@ -699,7 +701,9 @@ static struct platform_driver gpio_keys_driver = {
+
+ static struct platform_driver gpio_keys_polled_driver = {
+ 	.probe	= gpio_keys_polled_probe,
++#if LINUX_VERSION_CODE < KERNEL_VERSION(6,12,0)
+ 	.remove	= gpio_keys_remove,
++#endif
+ 	.driver	= {
+ 		.name	= "gpio-keys-polled",
+ 		.of_match_table = of_match_ptr(gpio_keys_polled_of_match),
