@@ -1,0 +1,41 @@
+diff --git a/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c b/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c
+--- a/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c	(revision c1d5de0c59efd25ecb5922cb11e5d38b072cf993)
++++ b/package/kernel/gpio-button-hotplug/src/gpio-button-hotplug.c	(date 1738423253802)
+@@ -538,10 +538,14 @@
+ 			struct device_node *child =
+ 				of_get_next_child(dev->of_node, prev);
+
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 3, 0)
+ 			bdata->gpiod = devm_fwnode_gpiod_get(dev,
+ 				of_fwnode_handle(child), NULL, GPIOD_IN,
+ 				desc);
+-
++#else
++			bdata->gpiod = devm_gpiod_get_from_of_node(dev,
++				child, "gpios", 0, GPIOD_IN, desc);
++#endif
+ 			prev = child;
+ 		}
+
+@@ -674,7 +678,11 @@
+ 	}
+ }
+
++#if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
+ static int gpio_keys_remove(struct platform_device *pdev)
++#else
++static void gpio_keys_remove(struct platform_device *pdev)
++#endif
+ {
+ 	struct gpio_keys_button_dev *bdev = platform_get_drvdata(pdev);
+
+@@ -685,7 +693,9 @@
+ 	else
+ 		gpio_keys_irq_close(bdev);
+
++#if LINUX_VERSION_CODE < KERNEL_VERSION(6,11,0)
+ 	return 0;
++#endif
+ }
+
+ static struct platform_driver gpio_keys_driver = {
