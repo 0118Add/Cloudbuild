@@ -92,7 +92,7 @@ git clone https://github.com/nikkinikki-org/OpenWrt-nikki  package/OpenWrt-nikki
 
 # unblockneteasemusic
 git clone https://$github/UnblockNeteaseMusic/luci-app-unblockneteasemusic package/luci-app-unblockneteasemusic
-sed -i 's/解除网易云音乐播放限制/音乐云解锁/g' package/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
+sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 
 # Theme
 git clone --depth=1 -b openwrt-24.10 https://github.com/sbwml/luci-theme-argon package/luci-theme-argon
