@@ -1,0 +1,22 @@
+--- a/ath10k-6.10/mac.c
++++ b/ath10k-6.10/mac.c
+@@ -10582,7 +10582,9 @@
+ 	.reconfig_complete		= ath10k_reconfig_complete,
+ 	.get_survey			= ath10k_get_survey,
+ 	.set_bitrate_mask		= ath10k_mac_op_set_bitrate_mask,
++#if LINUX_VERSION_CODE < KERNEL_VERSION(6,13,0)
+ 	.sta_rc_update			= ath10k_sta_rc_update,
++#endif
+ 	.offset_tsf			= ath10k_offset_tsf,
+ 	.get_tsf			= ath10k_get_tsf,
+ 	.ampdu_action			= ath10k_ampdu_action,
+--- a/ath10k-6.10/ahb.c
++++ b/ath10k-6.10/ahb.c
+@@ -843,6 +843,6 @@
+ 	},
+ 	.probe  = ath10k_ahb_probe,
+-	.remove_new = ath10k_ahb_remove,
++	.remove = ath10k_ahb_remove,
+ };
+ 
+ int ath10k_ahb_init(void)
