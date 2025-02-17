@@ -55,9 +55,6 @@ git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
 # netkit-ftp
 git clone https://$github/sbwml/package_new_ftp package/ftp
 
-# nethogs
-git clone https://github.com/sbwml/package_new_nethogs package/nethogs
-
 # SSRP & Passwall
 rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
 git clone https://$github/sbwml/openwrt_helloworld package/helloworld -b v5
