@@ -1,0 +1,77 @@
+name: openwrt-24.10-gcc15
+
+on: workflow_dispatch
+env:
+  BUILD_SCRIPT_MIRROR: "https://raw.githubusercontent.com/dd-ray/r5s_build_script/refs/heads/main"
+jobs:
+  build:
+    name: ${{ matrix.model }}-${{ matrix.libc }}-${{ matrix.tools }}
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        model:
+          - nanopi-r5s
+          - x86_64
+        tag:
+          - type: rc2
+            version: openwrt-24.10
+        libc:
+          - musl
+        tools:
+          - ccache
+          - noccache
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Set time zone
+      run: sudo timedatectl set-timezone 'Asia/Shanghai'
+
+    - name: Show system
+      run: |
+        lscpu
+        free -h
+        df -Th
+        uname -a
+
+    - name: Set release env
+      run: |
+        sudo mkdir -p /builder
+        sudo chown -R runner.runner /builder
+        echo WORKDIR="/builder" >> "$GITHUB_ENV"
+        git config --global user.name 'actions'
+        git config --global user.email 'action@github.com'
+
+    - name: Free disk space
+      uses: sbwml/actions@free-disk
+      with:
+        build-mount-path: /builder
+
+    - name: Build System Setup
+      uses: sbwml/actions@openwrt-build-setup
+
+    - name: Install LLVM
+      uses: sbwml/actions@install-llvm
+
+    - name: Compile Toolchain
+      working-directory: /builder
+      run: |
+        [ "${{ matrix.libc }}" = "glibc" ] && export ENABLE_GLIBC=y
+        [ "${{ matrix.tools }}" = "ccache" ] && export ENABLE_CCACHE=y
+        BUILD_SCRIPT_MIRROR=$BUILD_SCRIPT_MIRROR BUILD_TOOLCHAIN=y ENABLE_LTO=y ENABLE_BPF=y USE_GCC15=y ENABLE_MOLD=y bash <(curl -sS $BUILD_SCRIPT_MIRROR/openwrt/build.sh) ${{ matrix.tag.type }} ${{ matrix.model }}
+
+    - name: Create release
+      uses: ncipollo/release-action@v1.14.0
+      with:
+        name: ${{ matrix.tag.version }}
+        allowUpdates: true
+        tag: ${{ matrix.tag.version }}
+        commit: openwrt-24.10
+        replacesArtifacts: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: ${{ env.WORKDIR }}/openwrt/toolchain-cache/*
