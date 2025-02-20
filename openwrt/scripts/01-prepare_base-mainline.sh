@@ -46,12 +46,7 @@ release_kernel_version=$(curl -sL https://raw.githubusercontent.com/0118Add/Clou
 if [ "$local_kernel_version" = "$release_kernel_version" ] && [ -z "$git_password" ] && [ "$(whoami)" != "sbwml" ]; then
     git clone https://$github/0118Add/OpenWrt-Actions -b openwrt-24.10 target/linux/generic-6.12 --depth=1
 else
-    if [ "$(whoami)" = "runner" ]; then
-        git_name=private
-        git clone https://"$git_name":"$git_password"@$gitea/sbwml/target_linux_generic -b openwrt-24.10 target/linux/generic-6.12 --depth=1
-    elif [ "$(whoami)" = "sbwml" ]; then
-        git clone https://$gitea/sbwml/target_linux_generic -b openwrt-24.10 target/linux/generic-6.12 --depth=1
-    fi
+    git clone https://$github/dd-ray/target_linux_generic -b openwrt-24.10 target/linux/generic-6.12 --depth=1
 fi
 cp -a target/linux/generic-6.12/* target/linux/generic
 
