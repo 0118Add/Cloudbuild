@@ -99,7 +99,7 @@ rm -rf package/utils/util-linux
 git clone https://$github/sbwml/package_utils_util-linux -b openwrt-24.10 package/utils/util-linux
 
 # Shortcut Forwarding Engine
-git clone https://$gitea/sbwml/shortcut-fe package/new/shortcut-fe
+git clone https://$github/dd-ray/shortcut-fe package/new/shortcut-fe
 
 # Patch FireWall 4
 if [ "$version" = "dev" ] || [ "$version" = "rc2" ]; then
@@ -130,7 +130,7 @@ if [ "$version" = "dev" ] || [ "$version" = "rc2" ]; then
 fi
 
 # FullCone module
-git clone https://$gitea/sbwml/nft-fullcone package/new/nft-fullcone
+git clone https://$github/dd-ray/nft-fullcone package/new/nft-fullcone
 
 # IPv6 NAT
 git clone https://$github/sbwml/packages_new_nat6 package/new/nat6
