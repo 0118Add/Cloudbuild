@@ -35,13 +35,14 @@ CONFIG_PACKAGE_kmod-ngbe=y
 CONFIG_PACKAGE_kmod-r8101=y
 CONFIG_PACKAGE_kmod-r8125=y
 CONFIG_PACKAGE_kmod-r8126=y
+CONFIG_PACKAGE_kmod-r8127=y
 CONFIG_PACKAGE_kmod-r8168=y
 CONFIG_PACKAGE_kmod-txgbe=y
 # CONFIG_PACKAGE_kmod-r8169 is not set
 CONFIG_PACKAGE_kmod-nvme=y
 
 ### Display & Extra Drivers
-# CONFIG_PACKAGE_i915-firmware-huc is not set
-# CONFIG_PACKAGE_kmod-drm-i915 is not set
-# CONFIG_PACKAGE_kmod-sound-hda-codec-realtek is not set
-# CONFIG_PACKAGE_kmod-sound-hda-intel is not set
+CONFIG_PACKAGE_i915-firmware-huc=y
+CONFIG_PACKAGE_kmod-drm-i915=y
+CONFIG_PACKAGE_kmod-sound-hda-codec-realtek=y
+CONFIG_PACKAGE_kmod-sound-hda-intel=y
