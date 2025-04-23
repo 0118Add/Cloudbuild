@@ -47,10 +47,10 @@ rm -rf feeds/luci/applications/luci-app-filemanager
 git clone https://$github/sbwml/luci-app-filemanager package/luci-app-filemanager
 
 # OpenClash
-git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/OpenClash
+#git clone --depth=1 -b dev https://github.com/vernesong/OpenClash package/OpenClash
 
 # ddns-go
-git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
+#git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
 
 # netkit-ftp
 git clone https://$github/sbwml/package_new_ftp package/ftp
@@ -67,7 +67,7 @@ rm -rf feeds/luci/applications/luci-app-smartdns
 rm -rf feeds/packages/net/smartdns
 
 # DAED
-git clone https://$github/sbwml/luci-app-daed package/daed
+#git clone https://$github/sbwml/luci-app-daed package/daed
 #git clone -b master --depth 1 https://github.com/QiuSimons/luci-app-daed package/new/daed
 #git clone https://github.com/QiuSimons/luci-app-daed-next package/new/daed-next
 
