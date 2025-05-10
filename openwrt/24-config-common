@@ -58,8 +58,8 @@ CONFIG_PACKAGE_dnsmasq_full_ipset=y
 # CONFIG_DOCKER_OPTIONAL_FEATURES=y
 # CONFIG_DOCKER_STO_BTRFS=y
 # CONFIG_DOCKER_STO_EXT4=y
-CONFIG_PACKAGE_luci-app-dockerman=y
-CONFIG_PACKAGE_luci-lib-docker=y
+# CONFIG_PACKAGE_luci-app-dockerman=y
+# CONFIG_PACKAGE_luci-lib-docker=y
 # CONFIG_PACKAGE_docker-compose=y
 
 ### Luci
