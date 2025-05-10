@@ -220,25 +220,12 @@ rm -rf feeds/packages/net/curl
 git clone https://$github/sbwml/feeds_packages_net_curl feeds/packages/net/curl
 
 # Docker
-rm -rf feeds/luci/applications/luci-app-dockerman
-git clone https://$gitea/sbwml/luci-app-dockerman -b openwrt-23.05 feeds/luci/applications/luci-app-dockerman
-if [ "$version" = "dev" ] || [ "$version" = "rc2" ]; then
-    rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
-    git clone https://$github/sbwml/packages_utils_docker feeds/packages/utils/docker
-    git clone https://$github/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
-    git clone https://$github/sbwml/packages_utils_containerd feeds/packages/utils/containerd
-    git clone https://$github/sbwml/packages_utils_runc feeds/packages/utils/runc
-fi
-sed -i '/sysctl.d/d' feeds/packages/utils/dockerd/Makefile
-pushd feeds/packages
-    curl -s $mirror/openwrt/patch/docker/0001-dockerd-fix-bridge-network.patch | patch -p1
-    curl -s $mirror/openwrt/patch/docker/0002-docker-add-buildkit-experimental-support.patch | patch -p1
-    curl -s $mirror/openwrt/patch/docker/0003-dockerd-disable-ip6tables-for-bridge-network-by-defa.patch | patch -p1
-popd
+#rm -rf feeds/luci/applications/luci-app-dockerman
+#git clone https://github.com/lisaac/luci-app-dockerman package/luci-app-dockerman
 
 sed -i 's/"admin",/"admin","services",/g' feeds/luci/applications/luci-app-dockerman/luasrc/controller/*.lua
 sed -i 's/"admin/"admin\/services/g' feeds/luci/applications/luci-app-dockerman/luasrc/model/*.lua
-sed -i 's/"admin/"admin\/services/g' feeds/luci/applications/luci-app-dockerman/luasrc/model/cbi/dockerman/*.lua
+sed -i 's/"admin/"admin\/services/g' pfeeds/luci/applications/luci-app-dockerman/luasrc/model/cbi/dockerman/*.lua
 sed -i 's/"admin/"admin\/services/g' feeds/luci/applications/luci-app-dockerman/luasrc/view/dockerman/*.htm
 sed -i 's/"admin/"admin\/services/g' feeds/luci/applications/luci-app-dockerman/luasrc/view/dockerman/cbi/*.htm
 
